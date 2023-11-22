@@ -289,6 +289,7 @@ int main()
 
 
 	Model Pinball((char*)"Models/Pinball/pinball.obj");
+	Model tunel((char*)"Models/Pinball/tunel.obj");
 	Model Yuta((char*)"Models/Yuta/yuta.obj");
 	Model Rika((char*)"Models/Yuta/rika.obj");
 	Model Estatuas((char*)"Models/Valley/estatuas.obj");
@@ -297,8 +298,16 @@ int main()
 	Model ParedesValleDer((char*)"Models/Valley/paredDer.obj");
 	Model tiburon((char*)"Models/Tiburon/tiburon.obj");
 	Model itachi((char*)"Models/Itachi/itachi.obj");
-	Model nemo((char*)"Models/Nemo/nemo.obj");
+	//NEMO
+	Model NemoCuerpo((char*)"Models/Nemo/NemoCuerpo.obj");
+	Model cola((char*)"Models/Nemo/cola.obj");
+	Model aletaGrande((char*)"Models/Nemo/aletaGrande.obj");
+	Model aletaPequena((char*)"Models/Nemo/aletaPequena.obj");
 	Model templo((char*)"Models/Templo/templo.obj");
+	//PALANCA
+	Model estructura((char*)"Models/Palanca/estructura.obj");
+	Model palanca((char*)"Models/Palanca/palanca.obj");
+	Model resorte((char*)"Models/Palanca/resorte.obj");
 	
 
 
@@ -632,19 +641,23 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Pinball.Draw(lightingShader);
 
-
+		// Dibuja el objeto 'Tunel' 
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		tunel.Draw(lightingShader);
 
 		// Dibuja el objeto 'Yuta' 
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Yuta.Draw(lightingShader);
+		//Yuta.Draw(lightingShader);
 
 		// Dibuja el objeto 'Yuta' 
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Rika.Draw(lightingShader);
+		//Rika.Draw(lightingShader);
 
 		// Dibuja el objeto 'Estatuas' 
 		model = glm::mat4(1);
@@ -680,20 +693,83 @@ int main()
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		itachi.Draw(lightingShader);
+		//itachi.Draw(lightingShader);
 
-		// Dibuja el objeto 'nemo' 
+		//// Dibuja el objeto 'nemo' 
+		//model = glm::mat4(1);
+		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		//nemo.Draw(lightingShader);
+
+
+
+		// Dibuja el objeto 'NEMO' 
+		view = camera.GetViewMatrix();
+		model = glm::mat4(1);
+		model = glm::translate(tmp, glm::vec3(0.0f, 0.0f, 0.0f));
+		//model = glm::rotate(model, glm::radians(-rotVentana1), glm::vec3(0.0f, 1.0f, 0.0));
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		NemoCuerpo.Draw(lightingShader);
+
+		view = camera.GetViewMatrix();
+		//model = glm::mat4(1);
+		model = glm::translate(tmp, glm::vec3(0.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rotVentana1), glm::vec3(0.0f, 1.0f, 0.0));
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		cola.Draw(lightingShader);
+
+		view = camera.GetViewMatrix();
+		//model = glm::mat4(1);
+		model = glm::translate(tmp, glm::vec3(0.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rotVentana1), glm::vec3(0.0f, 0.0f, 1.0));
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		aletaGrande.Draw(lightingShader);
+			
+		view = camera.GetViewMatrix();
+		//model = glm::mat4(1);
+		model = glm::translate(tmp, glm::vec3(0.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rotVentana1), glm::vec3(0.0f, 1.0f, 1.0));
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		aletaPequena.Draw(lightingShader);
+			
+
+
+		// Dibuja el objeto 'templo' 
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		nemo.Draw(lightingShader);
+		//templo.Draw(lightingShader);
 
-		// Dibuja el objeto 'nemo' 
+		// Dibuja el objeto 'PALANCA' 
+		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
+		model = glm::translate(tmp, glm::vec3(0.0f, 0.0f, 0.0f));
+		//model = glm::rotate(model, glm::radians(-rotVentana1), glm::vec3(0.0f, 1.0f, 0.0));
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		templo.Draw(lightingShader);
+		estructura.Draw(lightingShader);
 
+		view = camera.GetViewMatrix();
+		//model = glm::mat4(1);
+		model = glm::translate(tmp, glm::vec3(0.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rotVentana1), glm::vec3(0.0f, 1.0f, 0.0));
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		palanca.Draw(lightingShader);
+
+		view = camera.GetViewMatrix();
+		//model = glm::mat4(1);
+		model = glm::translate(tmp, glm::vec3(0.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(rotVentana1), glm::vec3(0.0f, 1.0f, 0.0));
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		resorte.Draw(lightingShader);
+		
+			
 
 
 		glBindVertexArray(0);
