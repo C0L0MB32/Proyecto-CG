@@ -101,10 +101,10 @@ void saveFrame(void)
 {
 
 	//printf("SAVED\n", FrameIndex);
-	/*printf("frameindex %d\n", FrameIndex);
+	printf("frameindex %d\n", FrameIndex);
 	printf("%f %f %f %f %f %f\n", posX, posY, posZ, rotX, rotY, rotZ);
 	printf("%d\n", FrameIndex);
-	
+	/*
 	KeyFrame[FrameIndex].posX = posX;
 	KeyFrame[FrameIndex].posY = posY;
 	KeyFrame[FrameIndex].posZ = posZ;
@@ -230,6 +230,13 @@ int estadoActual = ESTADO_INICIAL;
 bool teclaPresionadaTV = false;
 float tiempo;
 float velocidad;
+int direccion = 1;
+int direccionCola = 1;
+float movCola = 0.0f;
+float movResorte = 0.0f;
+
+
+
 
 int main()
 {
@@ -290,12 +297,13 @@ int main()
 
 	Model Pinball((char*)"Models/Pinball/pinball.obj");
 	Model tunel((char*)"Models/Pinball/tunel.obj");
-	Model Yuta((char*)"Models/Yuta/yuta.obj");
-	Model Rika((char*)"Models/Yuta/rika.obj");
-	Model Estatuas((char*)"Models/Valley/estatuas.obj");
-	Model PisoValle((char*)"Models/Valley/piso.obj");
-	Model ParedesValleIzq((char*)"Models/Valley/paredIzq.obj");
-	Model ParedesValleDer((char*)"Models/Valley/paredDer.obj");
+	Model canica1((char*)"Models/Pinball/canica1.obj");
+	//Model Yuta((char*)"Models/Yuta/yuta.obj");
+	//Model Rika((char*)"Models/Yuta/rika.obj");
+	//Model Estatuas((char*)"Models/Valley/estatuas.obj");
+	//Model PisoValle((char*)"Models/Valley/piso.obj");
+	//Model ParedesValleIzq((char*)"Models/Valley/paredIzq.obj");
+	//Model ParedesValleDer((char*)"Models/Valley/paredDer.obj");
 	Model tiburon((char*)"Models/Tiburon/tiburon.obj");
 	Model itachi((char*)"Models/Itachi/itachi.obj");
 	//NEMO
@@ -647,13 +655,19 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		tunel.Draw(lightingShader);
 
+		// Dibuja el objeto 'Canica #1' 
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(posX, posY, posZ));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		canica1.Draw(lightingShader);
+
 		// Dibuja el objeto 'Yuta' 
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		//Yuta.Draw(lightingShader);
 
-		// Dibuja el objeto 'Yuta' 
+		// Dibuja el objeto 'Rika' 
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
@@ -693,7 +707,7 @@ int main()
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		//itachi.Draw(lightingShader);
+		itachi.Draw(lightingShader);
 
 		//// Dibuja el objeto 'nemo' 
 		//model = glm::mat4(1);
@@ -706,33 +720,34 @@ int main()
 		// Dibuja el objeto 'NEMO' 
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
-		model = glm::translate(tmp, glm::vec3(0.0f, 0.0f, 0.0f));
+		model = glm::translate(tmp, glm::vec3(-10.0f, 40.0f, 15.0f));
 		//model = glm::rotate(model, glm::radians(-rotVentana1), glm::vec3(0.0f, 1.0f, 0.0));
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(10.0f, -40.0f, -15.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		NemoCuerpo.Draw(lightingShader);
 
 		view = camera.GetViewMatrix();
 		//model = glm::mat4(1);
-		model = glm::translate(tmp, glm::vec3(0.0f, 0.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(rotVentana1), glm::vec3(0.0f, 1.0f, 0.0));
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		model = glm::translate(tmp, glm::vec3(-2.3f, 100.0f, 49.9f));
+		model = glm::rotate(model, glm::radians(movCola), glm::vec3(0.0f, 1.0f, 0.0));
+		model = glm::translate(model, glm::vec3(2.3f, -100.0f, -49.9f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		cola.Draw(lightingShader);
 
 		view = camera.GetViewMatrix();
 		//model = glm::mat4(1);
-		model = glm::translate(tmp, glm::vec3(0.0f, 0.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(rotVentana1), glm::vec3(0.0f, 0.0f, 1.0));
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		model = glm::translate(tmp, glm::vec3(-3.6f, 100.0f, 47.2f));
+		model = glm::rotate(model, glm::radians(rotVentana1), glm::vec3(0.0f, 1.0f, 0.0));
+		model = glm::translate(model, glm::vec3(3.6f, -100.0f, -47.2f));
+		//model = glm::translate(model, glm::vec3(posX, posY, posZ));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		aletaGrande.Draw(lightingShader);
 			
 		view = camera.GetViewMatrix();
 		//model = glm::mat4(1);
-		model = glm::translate(tmp, glm::vec3(0.0f, 0.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(rotVentana1), glm::vec3(0.0f, 1.0f, 1.0));
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		model = glm::translate(tmp, glm::vec3(-1.0f, 100.0f, 47.2f));
+		model = glm::rotate(model, glm::radians(-rotVentana1), glm::vec3(0.0f, 1.0f, 0.0));
+		model = glm::translate(model, glm::vec3(1.0f, -100.0f, -47.2f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		aletaPequena.Draw(lightingShader);
 			
@@ -744,28 +759,24 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		//templo.Draw(lightingShader);
 
-		// Dibuja el objeto 'PALANCA' 
-		view = camera.GetViewMatrix();
+
+
+		// Dibuja el objeto 'Palanca Estructura' 
 		model = glm::mat4(1);
-		model = glm::translate(tmp, glm::vec3(0.0f, 0.0f, 0.0f));
-		//model = glm::rotate(model, glm::radians(-rotVentana1), glm::vec3(0.0f, 1.0f, 0.0));
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		estructura.Draw(lightingShader);
-
-		view = camera.GetViewMatrix();
-		//model = glm::mat4(1);
-		model = glm::translate(tmp, glm::vec3(0.0f, 0.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(rotVentana1), glm::vec3(0.0f, 1.0f, 0.0));
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		
+		// Dibuja el objeto 'Palanca Sola' 
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, rotPuerta));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		palanca.Draw(lightingShader);
-
-		view = camera.GetViewMatrix();
-		//model = glm::mat4(1);
-		model = glm::translate(tmp, glm::vec3(0.0f, 0.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(rotVentana1), glm::vec3(0.0f, 1.0f, 0.0));
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		
+		// Dibuja el objeto 'Resorte' 
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -movResorte));
+		model = glm::scale(model, glm::vec3(1.0f, 1.0f, rotPuerta));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		resorte.Draw(lightingShader);
 		
@@ -1031,10 +1042,10 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 	{
 		FrameIndex = 0;
 
-		//if (FrameIndex<MAX_FRAMES)
-		//{
-		//	saveFrame();
-		//}
+		if (FrameIndex<MAX_FRAMES)
+		{
+			saveFrame();
+		}
 
 	}
 
@@ -1096,83 +1107,80 @@ void DoMovement()
 
 		static bool pesaMovida = false;
 		static bool teclaPresionada3 = false;
-	if (keys[GLFW_KEY_1]) {
-		//static bool ventanaAbierta = false;
-		//static bool teclaPresionada = false;
 
-		if (!teclaPresionada) {
-			teclaPresionada = true;  // Marcar la tecla como presionada
-
-			if (!ventanaAbierta) {
-				// Estado: Ventana Cerrada
-				ventanaAbierta = true;
+		if (keys[GLFW_KEY_1]) {
+			// Movimientos ALETAS
+			if (direccion==1)
+			{
+				rotVentana1 += 0.5f;
+				if (rotVentana1>=45.0f)
+				{
+					direccion = 0;
+				}
 			}
-			else {
-				// Estado: Ventana Abierta
-				ventanaAbierta = false;
+			if (direccion == 0)
+			{
+				rotVentana1 -= 0.5f;
+				if (rotVentana1 <= 0.0f)
+				{
+					direccion = 1;
+				}
 			}
-		}
-	}
-	else {
-		teclaPresionada = false;  // Restablecer la tecla como no presionada
-	}
+			//Parte de la Cola
+			if (direccionCola ==1)
+			{
+				movCola += 0.5f;
+				if (movCola >=10.0f)
+				{
+					direccionCola = 0;
+				}
+			}
+			if (direccionCola == 0)
+			{
+				movCola -= 0.5f;
+				if (movCola <= -10.0f)
+				{
+					direccionCola = 1;
+				}
+			}
 
-	// Actualizar el estado de la ventana según ventanaAbierta
-	if (ventanaAbierta) {
-		if (rotVentana1 < 180.0f) {
-			rotVentana1 += 1.0f;
+
 		}
-		else {
-			rotVentana1 = 180.0f;
-		}
-	}
-	else {
-		if (rotVentana1 > 0.0f) {
-			rotVentana1 -= 1.0f;
-		}
-		else {
-			rotVentana1 = 0.0f;
-		}
-	}
+		
 
 	//ANIMACION PUERTA
-	if (keys[GLFW_KEY_2])
-	{
-		if (!teclaPresionada2) {
-			teclaPresionada2 = true;  // Marcar la tecla como presionada
+		if (keys[GLFW_KEY_2])
+		{
+			if (!teclaPresionada2) {
+				teclaPresionada2 = true;  // Marcar la tecla como presionada
 
-			if (!puertaAbierta) {
-				// Estado: Ventana Cerrada
-				puertaAbierta = true;
+				if (!puertaAbierta) {
+					// Estado: Ventana Cerrada
+					puertaAbierta = true;
+				}
+				else {
+					// Estado: Ventana Abierta
+					puertaAbierta = false;
+				}
 			}
-			else {
-				// Estado: Ventana Abierta
-				puertaAbierta = false;
-			}
-		}
-			
-	}
-	else {
-		teclaPresionada2 = false;  // Restablecer la tecla como no presionada
-	}
 
-	// Actualizar el estado de la ventana según ventanaAbierta
-	if (puertaAbierta) {
-		if (rotPuerta < 110.0f) {
-			rotPuerta += 1.0f;
 		}
 		else {
-			rotPuerta = 110.0f;
+			teclaPresionada2 = false;  // Restablecer la tecla como no presionada
 		}
-	}
-	else {
-		if (rotPuerta > 0.0f) {
-			rotPuerta -= 1.0f;
+		// Actualizar el estado de la ventana según ventanaAbierta
+		if (puertaAbierta) {
+			if (rotPuerta > 0.3f) {
+				rotPuerta -= 0.05f;
+				movResorte -= 3.83;
+			}
 		}
 		else {
-			rotPuerta = 0.0f;
+			if (rotPuerta < 1.0f) {
+				rotPuerta += 0.4f;
+				movResorte += 30.64;
+			}
 		}
-	}
 
 	//ANIMACIÓN PANTALLAS
 	if (keys[GLFW_KEY_3])
@@ -1249,22 +1257,31 @@ void DoMovement()
 	//Mov Personaje
 	if (keys[GLFW_KEY_H])
 	{
-		posZ += 1;
+		posZ += 0.1;
 	}
 
 	if (keys[GLFW_KEY_Y])
 	{
-		posZ -= 1;
+		posZ -= 0.1;
 	}
 
 	if (keys[GLFW_KEY_G])
 	{
-		posX -= 1;
+		posX -= 0.1;
 	}
 
 	if (keys[GLFW_KEY_J])
 	{
-		posX += 1;
+		posX += 0.1;
+	}
+	if (keys[GLFW_KEY_I])
+	{
+		posY -= 0.1;
+	}
+
+	if (keys[GLFW_KEY_K])
+	{
+		posY += 0.1;
 	}
 
 
@@ -1274,6 +1291,7 @@ void DoMovement()
 	if (keys[GLFW_KEY_W] || keys[GLFW_KEY_UP])
 	{
 		camera.ProcessKeyboard(FORWARD, deltaTime*20);
+
 
 	}
 

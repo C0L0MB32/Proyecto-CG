@@ -1,3 +1,65 @@
+newmtl itachi2:FBXASC053_Material151_1_0_0_0SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd 5_Material144_1_0_0_baseColor.png
+Ni 1.00
+newmtl itachi2:FBXASC053_Material151_1_0_0_1SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+newmtl itachi2:FBXASC053_Material151_1_0_0_2SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 14.00
+newmtl itachi2:FBXASC053_Material151_1_0_0_3SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd 5_Material144_1_0_0_baseColor.png
+Ni 1.00
+newmtl itachi2:FBXASC053_Material151_1_0_0_4SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd 5_Material144_1_0_0_baseColor.png
+Ni 1.00
+newmtl itachi2:FBXASC053_Material151_1_0_0_5SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd 5_Material144_1_0_0_baseColor.png
+Ni 1.00
+newmtl itachi2:FBXASC053_Material151_1_0_0_6SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd 5_Material144_1_0_0_baseColor.png
+Ni 1.00
+newmtl itachi2:FBXASC053_Material151_1_0_0_7SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+Ni 1.00
+newmtl itachi2:FBXASC053_Material151_1_0_0_8SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd 5_Material144_1_0_0_baseColor.png
+Ni 1.00
 newmtl lambert3SG
 illum 4
 Kd 0.00 0.00 0.00
@@ -96,6 +158,13 @@ Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
 map_Kd Texture.png
 Ni 1.00
+newmtl lambert18SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd oceanoTunel.JPG
+Ni 1.00
 newmtl nemo:nemo_mat
 illum 4
 Kd 0.00 0.00 0.00
@@ -114,18 +183,98 @@ map_Kd red.JPG
 Ni 1.00
 Ks 0.80 0.00 0.00
 Ns 18.00
+newmtl phong3SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd esferaIMG.JPG
+Ni 1.00
+Ks 0.76 0.76 0.76
+Ns 8.17
 newmtl rika:brush_Wire
 illum 4
 Kd 0.00 0.00 0.00
 Ka 0.40 0.40 0.40
 Tf 1.00 1.00 1.00
 Ni 1.00
+newmtl templo:lambert2SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd greenTree.png
+Ni 1.00
+newmtl templo:lambert3SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd blackwood.jpg
+Ni 1.00
+newmtl templo:lambert4SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd orangeWood.jpg
+Ni 1.00
+newmtl templo:lambert6SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd GfCF6F8zDn.jpeg
+Ni 1.00
+newmtl templo:lambert7SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd GfCF6F8zDn.jpeg
+Ni 1.00
+newmtl templo:lambert8SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd bone.jpg
+Ni 1.00
+newmtl templo:phong1SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd TeethColor.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks TeethSpecular.jpg
+Ns 18.00
+newmtl templo:phong2SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd TeethColor.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks TeethSpecular.jpg
+Ns 18.00
+newmtl templo:phong3SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd TeethColor.jpg
+Ni 1.00
+Ks 0.00 0.00 0.00
+map_Ks TeethSpecular.jpg
+Ns 18.00
 newmtl yuta:object_20
 illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Kd RGB_4c1707ff81b84324b35e77d8d86c2f98_tex_skin.png
 Ni 1.00
 Ks 0.00 0.00 0.00
 Ns 9.85
@@ -158,7 +307,6 @@ illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Kd RGB_a0385d712952454186f0b00cf5eb9b91_tex_shoes.png
 Ni 1.00
 Ks 0.00 0.00 0.00
 Ns 9.85
@@ -167,7 +315,6 @@ illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Kd RGB_cc2cf159f3394bfea247e46fe7e8a5c7_tex_sweatpants.png
 Ni 1.00
 Ks 0.00 0.00 0.00
 Ns 9.85
@@ -176,7 +323,6 @@ illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Kd RGB_cc2cf159f3394bfea247e46fe7e8a5c7_tex_sweatpants.png
 Ni 1.00
 Ks 0.00 0.00 0.00
 Ns 9.85
@@ -201,7 +347,6 @@ illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Kd RGB_f426825c34f744708e40f013eb02f750_tex_ring.png
 Ni 1.00
 Ks 0.00 0.00 0.00
 Ns 9.85
@@ -210,7 +355,6 @@ illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Kd RGB_a2f00598f09843b19014aaa83297ea86_tex_eyes.png
 Ni 1.00
 Ks 0.00 0.00 0.00
 Ns 9.85
@@ -227,7 +371,6 @@ illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Kd RGB_552f9beea74a48cf9c9f72e39bec753f_tex_eyebrows.png
 Ni 1.00
 Ks 0.00 0.00 0.00
 Ns 9.85
@@ -236,7 +379,6 @@ illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Kd RGB_2fb6f215696e4eec8020f4b4810f3c55_tex_hair0.png
 Ni 1.00
 Ks 0.00 0.00 0.00
 Ns 9.85
@@ -245,7 +387,6 @@ illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Kd RGB_f2193aa0d1eb4b62ad5882c920755d11_tex_hair1.png
 Ni 1.00
 Ks 0.00 0.00 0.00
 Ns 9.85
@@ -254,7 +395,6 @@ illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Kd RGB_32fbefcede1443879980ab092729cb5a_tex_hair3.png
 Ni 1.00
 Ks 0.00 0.00 0.00
 Ns 9.85
@@ -263,7 +403,6 @@ illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Kd RGB_a0ae7f2e0e694fa0817b91f49a89dbcb_tex_hair2.png
 Ni 1.00
 Ks 0.00 0.00 0.00
 Ns 9.85
@@ -272,7 +411,6 @@ illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Kd RGB_a0ae7f2e0e694fa0817b91f49a89dbcb_tex_hair2.png
 Ni 1.00
 Ks 0.00 0.00 0.00
 Ns 9.85
