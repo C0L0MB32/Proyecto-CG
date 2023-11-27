@@ -235,7 +235,9 @@ int direccionCola = 1;
 float movCola = 0.0f;
 float movResorte = 0.0f;
 
-
+float movNemoX = 0.0f;
+float movNemoY = 0.0f;
+float movNemoZ = 0.0f;
 
 
 int main()
@@ -297,10 +299,12 @@ int main()
 
 	Model Pinball((char*)"Models/Pinball/pinball.obj");
 	Model tunel((char*)"Models/Pinball/tunel.obj");
+	Model paleta1((char*)"Models/Pinball/paletazquierda.obj");
+	Model paleta2((char*)"Models/Pinball/paletaDerecha.obj");
 	Model canica1((char*)"Models/Pinball/canica1.obj");
-	//Model Yuta((char*)"Models/Yuta/yuta.obj");
-	//Model Rika((char*)"Models/Yuta/rika.obj");
-	//Model Estatuas((char*)"Models/Valley/estatuas.obj");
+	Model Yuta((char*)"Models/Yuta/yuta.obj");
+	Model Rika((char*)"Models/Yuta/rika.obj");
+	Model Estatuas((char*)"Models/Valley/estatuas.obj");
 	//Model PisoValle((char*)"Models/Valley/piso.obj");
 	//Model ParedesValleIzq((char*)"Models/Valley/paredIzq.obj");
 	//Model ParedesValleDer((char*)"Models/Valley/paredDer.obj");
@@ -312,6 +316,7 @@ int main()
 	Model aletaGrande((char*)"Models/Nemo/aletaGrande.obj");
 	Model aletaPequena((char*)"Models/Nemo/aletaPequena.obj");
 	Model templo((char*)"Models/Templo/templo.obj");
+	//Model templo2((char*)"Models/Templo/templo2.obj");
 	//PALANCA
 	Model estructura((char*)"Models/Palanca/estructura.obj");
 	Model palanca((char*)"Models/Palanca/palanca.obj");
@@ -665,19 +670,19 @@ int main()
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		//Yuta.Draw(lightingShader);
+		Yuta.Draw(lightingShader);
 
 		// Dibuja el objeto 'Rika' 
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		//Rika.Draw(lightingShader);
+		Rika.Draw(lightingShader);
 
 		// Dibuja el objeto 'Estatuas' 
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		//Estatuas.Draw(lightingShader);
+		Estatuas.Draw(lightingShader);
 
 		// Dibuja el objeto 'PisoValle' 
 		model = glm::mat4(1);
@@ -720,9 +725,9 @@ int main()
 		// Dibuja el objeto 'NEMO' 
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
-		model = glm::translate(tmp, glm::vec3(-10.0f, 40.0f, 15.0f));
+		model = glm::translate(tmp, glm::vec3(0.0f,movNemoY, movNemoZ));
 		//model = glm::rotate(model, glm::radians(-rotVentana1), glm::vec3(0.0f, 1.0f, 0.0));
-		model = glm::translate(model, glm::vec3(10.0f, -40.0f, -15.0f));
+		//model = glm::translate(model, glm::vec3(10.0f, -40.0f, -15.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		NemoCuerpo.Draw(lightingShader);
 
@@ -736,18 +741,18 @@ int main()
 
 		view = camera.GetViewMatrix();
 		//model = glm::mat4(1);
-		model = glm::translate(tmp, glm::vec3(-3.6f, 100.0f, 47.2f));
+		model = glm::translate(tmp, glm::vec3(-3.6f, 100.0f , 47.2f + movNemoZ));
 		model = glm::rotate(model, glm::radians(rotVentana1), glm::vec3(0.0f, 1.0f, 0.0));
-		model = glm::translate(model, glm::vec3(3.6f, -100.0f, -47.2f));
+		model = glm::translate(model, glm::vec3(3.6f, -100.0f , -47.2f ));
 		//model = glm::translate(model, glm::vec3(posX, posY, posZ));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		aletaGrande.Draw(lightingShader);
 			
 		view = camera.GetViewMatrix();
 		//model = glm::mat4(1);
-		model = glm::translate(tmp, glm::vec3(-1.0f, 100.0f, 47.2f));
+		model = glm::translate(tmp, glm::vec3(-1.0f, 100.0f , 47.2f));
 		model = glm::rotate(model, glm::radians(-rotVentana1), glm::vec3(0.0f, 1.0f, 0.0));
-		model = glm::translate(model, glm::vec3(1.0f, -100.0f, -47.2f));
+		model = glm::translate(model, glm::vec3(1.0f, -100.0f, -47.2f ));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		aletaPequena.Draw(lightingShader);
 			
@@ -757,9 +762,13 @@ int main()
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		//templo.Draw(lightingShader);
+		templo.Draw(lightingShader);
 
-
+		// Dibuja el objeto 'templo2' 
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		//templo2.Draw(lightingShader);
 
 		// Dibuja el objeto 'Palanca Estructura' 
 		model = glm::mat4(1);
@@ -775,12 +784,29 @@ int main()
 		
 		// Dibuja el objeto 'Resorte' 
 		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -movResorte));
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, rotPuerta));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		resorte.Draw(lightingShader);
-		
-			
+
+
+
+		//PALETAS
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(movCola), glm::vec3(0.0f, 1.0f, 0.0));
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		paleta1.Draw(lightingShader);
+
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(movCola), glm::vec3(0.0f, 1.0f, 0.0));
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		paleta2.Draw(lightingShader);
 
 
 		glBindVertexArray(0);
@@ -1168,7 +1194,7 @@ void DoMovement()
 		else {
 			teclaPresionada2 = false;  // Restablecer la tecla como no presionada
 		}
-		// Actualizar el estado de la ventana según ventanaAbierta
+		// Actualizar el estado de la ventana segun ventanaAbierta
 		if (puertaAbierta) {
 			if (rotPuerta > 0.3f) {
 				rotPuerta -= 0.05f;
@@ -1255,16 +1281,18 @@ void DoMovement()
 	
 
 	//Mov Personaje
+	//EJE X
 	if (keys[GLFW_KEY_H])
 	{
 		posZ += 0.1;
+		movNemoY -= -0.016081f;
+		movNemoZ += -0.10f;
 	}
-
 	if (keys[GLFW_KEY_Y])
 	{
 		posZ -= 0.1;
 	}
-
+	//EJE Z
 	if (keys[GLFW_KEY_G])
 	{
 		posX -= 0.1;
@@ -1274,6 +1302,7 @@ void DoMovement()
 	{
 		posX += 0.1;
 	}
+	//EJE Y
 	if (keys[GLFW_KEY_I])
 	{
 		posY -= 0.1;
