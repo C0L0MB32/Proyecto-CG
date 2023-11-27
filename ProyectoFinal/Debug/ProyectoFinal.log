@@ -14,4 +14,9 @@ D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\Proyecto
 D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1303,14): warning C4305: '+=': truncamiento de 'double' a 'float'
 D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1308,14): warning C4305: '-=': truncamiento de 'double' a 'float'
 D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1313,14): warning C4305: '+=': truncamiento de 'double' a 'float'
+LINK : warning LNK4098: la biblioteca predeterminada'MSVCRT' entra en conflicto con otras bibliotecas; use la biblioteca /NODEFAULTLIB:biblioteca
+soil2-debug.lib(etc1_utils.obj) : warning LNK4099: no se encontró PDB '' con 'soil2-debug.lib(etc1_utils.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
+soil2-debug.lib(image_DXT.obj) : warning LNK4099: no se encontró PDB '' con 'soil2-debug.lib(image_DXT.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
+soil2-debug.lib(image_helper.obj) : warning LNK4099: no se encontró PDB '' con 'soil2-debug.lib(image_helper.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
+soil2-debug.lib(SOIL2.obj) : warning LNK4099: no se encontró PDB '' con 'soil2-debug.lib(SOIL2.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
   ProyectoFinal.vcxproj -> D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\Debug\ProyectoFinal.exe

@@ -316,7 +316,7 @@ int main()
 	Model aletaGrande((char*)"Models/Nemo/aletaGrande.obj");
 	Model aletaPequena((char*)"Models/Nemo/aletaPequena.obj");
 	Model templo((char*)"Models/Templo/templo.obj");
-	//Model templo2((char*)"Models/Templo/templo2.obj");
+	Model templo2((char*)"Models/Templo/templo2.obj");
 	//PALANCA
 	Model estructura((char*)"Models/Palanca/estructura.obj");
 	Model palanca((char*)"Models/Palanca/palanca.obj");
@@ -768,7 +768,7 @@ int main()
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		//templo2.Draw(lightingShader);
+		templo2.Draw(lightingShader);
 
 		// Dibuja el objeto 'Palanca Estructura' 
 		model = glm::mat4(1);
