@@ -1,6 +1,5 @@
 #include <iostream>
 #include <cmath>
-
 // GLEW
 #include <GL/glew.h>
 
@@ -24,6 +23,7 @@
 #include "Camera.h"
 #include "Model.h"
 #include "Texture.h"
+
 
 // Function prototypes
 void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode);
@@ -232,14 +232,56 @@ float tiempo;
 float velocidad;
 int direccion = 1;
 int direccionCola = 1;
-float movCola = 0.0f;
+float movCola = 1.0f;
 float movResorte = 0.0f;
+int contaResorte = 0;
+float test1 = 1.0f;
+float test2 = 0.0f;
+float movPalanca = 0.0f;
+float movPaleta1 = 0.0f;
+float movPaleta2 = 0.0f;
 
+//MOV NEMO
 float movNemoX = 0.0f;
 float movNemoY = 0.0f;
 float movNemoZ = 0.0f;
 
+//MOV PALETAS
+int direccionPaleta1 = 1;
+int direccionPaleta2 = 1;
 
+
+//MOUSE CALLBACK
+bool mousePresionado = false;
+double mouseX, mouseY;
+
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
+	if (button == GLFW_MOUSE_BUTTON_LEFT) {
+		if (action == GLFW_PRESS) {
+			mousePresionado = true;
+			glfwGetCursorPos(window, &mouseX, &mouseY);
+		}
+		else if (action == GLFW_RELEASE) {
+			mousePresionado = false;
+		}
+	}
+}
+
+void movimientoResorte() {
+	if (test1 <= 0.3)
+	{
+		rotPuerta = test1;
+		movResorte = test2;
+		movPalanca = movPalanca;
+	}
+	else {
+		test1 -= 0.05f;
+		test2 += 3.83f;
+		rotPuerta = test1;
+		movResorte = test2;
+		movPalanca += 0.22;
+	}
+}
 int main()
 {
 	// Init GLFW
@@ -298,6 +340,7 @@ int main()
 
 
 	Model Pinball((char*)"Models/Pinball/pinball.obj");
+	Model cristal((char*)"Models/Pinball/glass.obj");
 	Model tunel((char*)"Models/Pinball/tunel.obj");
 	Model paleta1((char*)"Models/Pinball/paletazquierda.obj");
 	Model paleta2((char*)"Models/Pinball/paletaDerecha.obj");
@@ -526,6 +569,8 @@ int main()
 
 	glm::mat4 projection = glm::perspective(camera.GetZoom(), (GLfloat)SCREEN_WIDTH / (GLfloat)SCREEN_HEIGHT, 0.1f, 1000.0f);
 
+	//MOUSE CALLBACK
+	glfwSetMouseButtonCallback(window, mouse_button_callback);
 	// Game loop
 	while (!glfwWindowShouldClose(window))
 	{
@@ -544,6 +589,31 @@ int main()
 		// Clear the colorbuffer
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
+		//MOUSE CALLBACK
+		if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
+			double newMouseX, newMouseY;
+			glfwGetCursorPos(window, &newMouseX, &newMouseY);
+
+			// Calcula la diferencia en la posición Y del mouse
+			double deltaY = newMouseY - mouseY;
+
+			// Solo realiza ajustes si el mouse se arrastra hacia abajo
+			if (deltaY > 0.0) {
+				movimientoResorte();
+				mouseX = newMouseX;
+				mouseY = newMouseY;
+
+			}
+		}
+		else {
+			test1 = 1.0f;
+			test2 = 0.0f;
+			rotPuerta = 1.0f;
+			movResorte = 0.0f;
+			movPalanca = 0.0f;
+		}
 
 
 		// Use cooresponding shader when setting uniforms/drawing objects
@@ -775,17 +845,17 @@ int main()
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		estructura.Draw(lightingShader);
-		
+
 		// Dibuja el objeto 'Palanca Sola' 
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, rotPuerta));
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, movPalanca));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		palanca.Draw(lightingShader);
-		
+
 		// Dibuja el objeto 'Resorte' 
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -movResorte));
+		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, movResorte));
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, rotPuerta));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		resorte.Draw(lightingShader);
@@ -794,17 +864,17 @@ int main()
 
 		//PALETAS
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(movCola), glm::vec3(0.0f, 1.0f, 0.0));
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-13.0f, 100.0f, 62.0f));
+		model = glm::rotate(model, glm::radians(movPaleta1), glm::vec3(0.0f, 1.0f, 0.0));
+		model = glm::translate(model, glm::vec3(13.0f, -100.0f, -62.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		paleta1.Draw(lightingShader);
 
 
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(movCola), glm::vec3(0.0f, 1.0f, 0.0));
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(4.3f, 100.0f, 62.0f));
+		model = glm::rotate(model, glm::radians(-movPaleta2), glm::vec3(0.0f, 1.0f, 0.0));
+		model = glm::translate(model, glm::vec3(-4.3f, -100.0f, -62.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		paleta2.Draw(lightingShader);
 
@@ -900,6 +970,17 @@ int main()
 		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		//ventana2.Draw(lightingShader);
 
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(4.0f, 0.0f, -4.0f));
+		glEnable(GL_BLEND);//Avtiva la funcionalidad para trabajar el canal alfa
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 1.0f, 1.0f, 1.0f, 0.95f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.specular"), 1.0f, 1.0f, 1.0f);
+		cristal.Draw(lightingShader);
+		glDisable(GL_BLEND); //Desactiva el canal alfa 
 
 		//Anim2.Use();
 		//tiempo = glfwGetTime() * 10.0f;
@@ -1133,12 +1214,18 @@ void DoMovement()
 
 		static bool pesaMovida = false;
 		static bool teclaPresionada3 = false;
+		static bool teclaPresionadaPaleta1 = false;
+		static bool teclaPresionadaPaleta2 = false;
+		static bool Paleta1abierta = false;
+		static bool Paleta2abierta = false;
 
 		if (keys[GLFW_KEY_1]) {
 			// Movimientos ALETAS
 			if (direccion==1)
 			{
 				rotVentana1 += 0.5f;
+				movPaleta2 += 0.5f;
+				movPaleta1 += 0.5f;
 				if (rotVentana1>=45.0f)
 				{
 					direccion = 0;
@@ -1147,6 +1234,8 @@ void DoMovement()
 			if (direccion == 0)
 			{
 				rotVentana1 -= 0.5f;
+				movPaleta2 -= 0.5f;
+				movPaleta1 -= 0.5f;
 				if (rotVentana1 <= 0.0f)
 				{
 					direccion = 1;
@@ -1278,8 +1367,73 @@ void DoMovement()
 			posPesa = 0.0f;
 		}
 	}
-	
+	if (keys[GLFW_KEY_C]) {
+		if (!teclaPresionadaPaleta1) {
+			teclaPresionadaPaleta1 = true;  // Marcar la tecla como presionada
 
+			if (!Paleta1abierta) {
+				// Estado: Ventana Cerrada
+				Paleta1abierta = true;
+			}
+			else {
+				// Estado: Ventana Abierta
+				Paleta1abierta = false;
+			}
+		}
+	}
+	else {
+		teclaPresionadaPaleta1 = false;
+	}
+	if (Paleta1abierta) {
+		if (movPaleta1 < 45.0f) {
+			movPaleta1 += 3.0f;
+		}
+		else {
+			movPaleta1 = 45.0f;
+		}
+	}
+	else {
+		if (movPaleta1 > 0.0f) {
+			movPaleta1 -= 3.0f;
+		}
+		else {
+			movPaleta1 = 0.0f;
+		}
+	}
+
+	if (keys[GLFW_KEY_V]) {
+		if (!teclaPresionadaPaleta2) {
+			teclaPresionadaPaleta2 = true;  // Marcar la tecla como presionada
+
+			if (!Paleta2abierta) {
+				// Estado: Ventana Cerrada
+				Paleta2abierta = true;
+			}
+			else {
+				// Estado: Ventana Abierta
+				Paleta2abierta = false;
+			}
+		}
+	}
+	else {
+		teclaPresionadaPaleta2 = false;
+	}
+	if (Paleta2abierta) {
+		if (movPaleta2 < 45.0f) {
+			movPaleta2 += 3.0f;
+		}
+		else {
+			movPaleta2 = 45.0f;
+		}
+	}
+	else {
+		if (movPaleta2 > 0.0f) {
+			movPaleta2 -= 3.0f;
+		}
+		else {
+			movPaleta2 = 0.0f;
+		}
+	}
 	//Mov Personaje
 	//EJE X
 	if (keys[GLFW_KEY_H])

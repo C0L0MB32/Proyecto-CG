@@ -21,6 +21,9 @@
     <ClInclude Include="Model.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="..\External Libraries\irrKlang\irrKlang.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="317144262_PROYECTOFINAL2024-1_GRUPO07.cpp">
