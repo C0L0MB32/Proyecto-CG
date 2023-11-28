@@ -35,7 +35,7 @@ void animacion();
 const GLuint WIDTH = 800, HEIGHT = 600;
 int SCREEN_WIDTH, SCREEN_HEIGHT;
 
-// Camera
+// Camera Libre
 Camera  camera(glm::vec3(-100.0f, 2.0f, -45.0f));
 GLfloat lastX = WIDTH / 2.0;
 GLfloat lastY = HEIGHT / 2.0;
@@ -44,7 +44,21 @@ bool firstMouse = true;
 float range = 0.0f;
 float rot = 0.0f;
 
+bool modoIsometrico = true; // Establece el modo inicial como isométrico
 
+
+void vista1() {
+	// Cambiar la posición inicial de la cámara para una vista isométrica
+	Camera camera(glm::vec3(-2.0f, 200.0f, 50.0f), glm::vec3(0.0f, -1.0f, 0.0f)); // Ajusta la orientación inicial hacia abajo
+}
+void vista2() {
+	// Cambiar la posición inicial de la cámara para una vista isométrica
+	Camera camera(glm::vec3(-2.0f, 200.0f, 50.0f), glm::vec3(0.0f, -1.0f, 0.0f)); // Ajusta la orientación inicial hacia abajo
+}
+void vista3() {
+	// Cambiar la posición inicial de la cámara para una vista isométrica
+	Camera camera(glm::vec3(-100.0f, 2.0f, -45.0f));
+}
 // Light attributes
 glm::vec3 lightPos(0.0f, 0.0f, 0.0f);
 glm::vec3 PosIni(-13.0f, 11.5f, 0.5f);
@@ -616,6 +630,9 @@ int main()
 		}
 
 
+
+
+
 		// Use cooresponding shader when setting uniforms/drawing objects
 		lightingShader.Use();
 		GLint viewPosLoc = glGetUniformLocation(lightingShader.Program, "viewPos");
@@ -979,7 +996,7 @@ int main()
 		glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 1.0f, 1.0f, 1.0f, 0.95f);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.specular"), 1.0f, 1.0f, 1.0f);
-		cristal.Draw(lightingShader);
+		//cristal.Draw(lightingShader);
 		glDisable(GL_BLEND); //Desactiva el canal alfa 
 
 		//Anim2.Use();
