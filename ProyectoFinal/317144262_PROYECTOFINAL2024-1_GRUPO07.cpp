@@ -24,7 +24,10 @@
 #include "Model.h"
 #include "Texture.h"
 
+//Sonido
+#include<irrKlang.h>
 
+using namespace irrklang;
 // Function prototypes
 void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode);
 void MouseCallback(GLFWwindow *window, double xPos, double yPos);
@@ -35,30 +38,12 @@ void animacion();
 const GLuint WIDTH = 800, HEIGHT = 600;
 int SCREEN_WIDTH, SCREEN_HEIGHT;
 
-// Camera Libre
-Camera  camera(glm::vec3(-100.0f, 2.0f, -45.0f));
-GLfloat lastX = WIDTH / 2.0;
-GLfloat lastY = HEIGHT / 2.0;
-bool keys[1024];
-bool firstMouse = true;
-float range = 0.0f;
-float rot = 0.0f;
+
 
 bool modoIsometrico = true; // Establece el modo inicial como isométrico
 
 
-void vista1() {
-	// Cambiar la posición inicial de la cámara para una vista isométrica
-	Camera camera(glm::vec3(-2.0f, 200.0f, 50.0f), glm::vec3(0.0f, -1.0f, 0.0f)); // Ajusta la orientación inicial hacia abajo
-}
-void vista2() {
-	// Cambiar la posición inicial de la cámara para una vista isométrica
-	Camera camera(glm::vec3(-2.0f, 200.0f, 50.0f), glm::vec3(0.0f, -1.0f, 0.0f)); // Ajusta la orientación inicial hacia abajo
-}
-void vista3() {
-	// Cambiar la posición inicial de la cámara para una vista isométrica
-	Camera camera(glm::vec3(-100.0f, 2.0f, -45.0f));
-}
+
 // Light attributes
 glm::vec3 lightPos(0.0f, 0.0f, 0.0f);
 glm::vec3 PosIni(-13.0f, 11.5f, 0.5f);
@@ -129,67 +114,67 @@ void saveFrame(void)
 
 	FrameIndex++;*/
 
-	KeyFrame[0].posX = -13.5f;
-	KeyFrame[0].posY = 13.0f;
-	KeyFrame[0].posZ = 0.5f;
+	KeyFrame[0].posX = -0.1f;
+	KeyFrame[0].posY = 0.0f;
+	KeyFrame[0].posZ = 0.0f;
 	KeyFrame[0].rotX = 0.0f;
 	KeyFrame[0].rotY = 0.0f;
 	KeyFrame[0].rotZ = 0.0f;
 
-	KeyFrame[1].posX = -14.0f;
-	KeyFrame[1].posY = 12.0f;
-	KeyFrame[1].posZ = 0.5f;
+	KeyFrame[1].posX = -0.4f;
+	KeyFrame[1].posY = 5.4f;
+	KeyFrame[1].posZ = -101.1f;
 	KeyFrame[1].rotX = 0.0f;
-	KeyFrame[1].rotY = 10.0f;
+	KeyFrame[1].rotY = 0.0f;
 	KeyFrame[1].rotZ = 0.0f;
 
-	KeyFrame[2].posX = -12.5f;
-	KeyFrame[2].posY = 10.5f;
-	KeyFrame[2].posZ = 1.5f;
+	KeyFrame[2].posX = -7.199982f;
+	KeyFrame[2].posY = 5.399990f;
+	KeyFrame[2].posZ = -104.398979f;
 	KeyFrame[2].rotX = 0.0f;
-	KeyFrame[2].rotY = -5.0f;
+	KeyFrame[2].rotY = 0.0f;
 	KeyFrame[2].rotZ = 0.0f;
 
-	KeyFrame[3].posX = -11.0f;
-	KeyFrame[3].posY = 12.5f;
-	KeyFrame[3].posZ = 0.5f;
+	KeyFrame[3].posX = -22.000034f;
+	KeyFrame[3].posY = 6.399989f;
+	KeyFrame[3].posZ = -90.899185f;
 	KeyFrame[3].rotX = 0.0f;
-	KeyFrame[3].rotY = 5.0f;
+	KeyFrame[3].rotY = 0.0f;
 	KeyFrame[3].rotZ = 0.0f;
 
-	KeyFrame[4].posX = -13.0f;
-	KeyFrame[4].posY = 14.0f;
-	KeyFrame[4].posZ = -1.5f;
+	KeyFrame[4].posX = -19.700026f;
+	KeyFrame[4].posY = 6.399989f;
+	KeyFrame[4].posZ = -88.099228f;
 	KeyFrame[4].rotX = 0.0f;
-	KeyFrame[4].rotY = 10.0f;
+	KeyFrame[4].rotY = 0.0f;
 	KeyFrame[4].rotZ = 0.0f;
 
-	KeyFrame[5].posX = -11.0f;
-	KeyFrame[5].posY = 10.5f;
-	KeyFrame[5].posZ = 0.5f;
+	KeyFrame[5].posX = -25.500048f;
+	KeyFrame[5].posY = 4.399991f;
+	KeyFrame[5].posZ = -83.099304f;
 	KeyFrame[5].rotX = 0.0f;
-	KeyFrame[5].rotY = -20.0f;
+	KeyFrame[5].rotY = 0.0f;
 	KeyFrame[5].rotZ = 0.0f;
 
-	KeyFrame[6].posX = -11.0f;
-	KeyFrame[6].posY = 15.5f;
-	KeyFrame[6].posZ = 1.5f;
+	KeyFrame[6].posX = -30.200066f;
+	KeyFrame[6].posY = -0.200008f;
+	KeyFrame[6].posZ = -5.599995f;
 	KeyFrame[6].rotX = 0.0f;
-	KeyFrame[6].rotY = 5.0f;
+	KeyFrame[6].rotY = 0.0f;
 	KeyFrame[6].rotZ = 0.0f;
 
-	KeyFrame[7].posX = -13.0f;
-	KeyFrame[7].posY = 13.5f;
-	KeyFrame[7].posZ = 0.5f;
+	KeyFrame[7].posX = -30.200066f;
+	KeyFrame[7].posY = -0.200008f;
+	KeyFrame[7].posZ = -1.899998f;
 	KeyFrame[7].rotX = 0.0f;
-	KeyFrame[7].rotY = -15.0f;
+	KeyFrame[7].rotY = 0.0f;
 	KeyFrame[7].rotZ = 0.0f;
 
-	KeyFrame[8].posX = -10.0f;
-	KeyFrame[8].posY = 11.5f;
-	KeyFrame[8].posZ = -1.5f;
+	KeyFrame[8].posX = 0.0f;
+	KeyFrame[8].posY = 0.0f;
+	KeyFrame[8].posZ = 0.0f;
 	KeyFrame[8].rotX = 0.0f;
-	KeyFrame[8].rotY = 3.0f;
+	KeyFrame[8].rotY = 0.0f;
 	KeyFrame[8].rotZ = 0.0f;
 	FrameIndex++;
 }
@@ -260,14 +245,28 @@ float movNemoX = 0.0f;
 float movNemoY = 0.0f;
 float movNemoZ = 0.0f;
 
+float pendienteZ = (-36.300022 - 76.699402) / (29.300089 - 29.300089);  // Calcula la pendiente en el eje Z
+float pendienteY = (98.699059 - 96.099098) / (29.300089 - 29.300089);  // Calcula la pendiente en el eje Y
+
+// Ajusta la velocidad del movimiento
+float velocidadZ = 0.1f;   // Ajusta según sea necesario
+float velocidadY = 0.01f;  // Ajusta según sea necesario
+
 //MOV PALETAS
 int direccionPaleta1 = 1;
 int direccionPaleta2 = 1;
 
-
+//MOV CANICA
+float movCANICAX = 0.0f;
+float movCANICAY = 0.0f;
+float movCANICAZ = 0.0f;
+void animacionCanica();
+void animateTo(glm::vec3 target);
 //MOUSE CALLBACK
 bool mousePresionado = false;
 double mouseX, mouseY;
+
+bool activoAnimacion = false;
 
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
 	if (button == GLFW_MOUSE_BUTTON_LEFT) {
@@ -296,6 +295,41 @@ void movimientoResorte() {
 		movPalanca += 0.22;
 	}
 }
+
+void vista1() {
+	// Cambiar la posición inicial de la cámara para una vista isométrica
+	Camera camera(glm::vec3(-2.0f, 200.0f, 50.0f), glm::vec3(0.0f, -1.0f, 0.0f)); // Ajusta la orientación inicial hacia abajo
+	GLfloat lastX = WIDTH / 2.0;
+	GLfloat lastY = HEIGHT / 2.0;
+	bool keys[1024];
+	bool firstMouse = true;
+	float range = 0.0f;
+	float rot = 0.0f;
+}
+//void vista2() {
+	// Ajusta la posición de la cámara para seguir a Nemo
+	Camera  camera(glm::vec3(movNemoX, movNemoY + 5.0f, movNemoZ + 10.0f));
+	GLfloat lastX = WIDTH / 2.0;
+	GLfloat lastY = HEIGHT / 2.0;
+	bool keys[1024];
+	bool firstMouse = true;
+	float range = 0.0f;
+	float rot = 0.0f;
+//}
+
+void vista3() {
+	// Camera Libre
+	Camera  camera(glm::vec3(-100.0f, 2.0f, -45.0f));
+	GLfloat lastX = WIDTH / 2.0;
+	GLfloat lastY = HEIGHT / 2.0;
+	bool keys[1024];
+	bool firstMouse = true;
+	float range = 0.0f;
+	float rot = 0.0f;
+}
+
+
+
 int main()
 {
 	// Init GLFW
@@ -359,6 +393,7 @@ int main()
 	Model paleta1((char*)"Models/Pinball/paletazquierda.obj");
 	Model paleta2((char*)"Models/Pinball/paletaDerecha.obj");
 	Model canica1((char*)"Models/Pinball/canica1.obj");
+	Model canicaAnimada1((char*)"Models/Pinball/canicaAnimada1.obj");
 	Model Yuta((char*)"Models/Yuta/yuta.obj");
 	Model Rika((char*)"Models/Yuta/rika.obj");
 	Model Estatuas((char*)"Models/Valley/estatuas.obj");
@@ -379,6 +414,7 @@ int main()
 	Model palanca((char*)"Models/Palanca/palanca.obj");
 	Model resorte((char*)"Models/Palanca/resorte.obj");
 	
+
 
 
 	// Build and compile our shader program
@@ -583,6 +619,14 @@ int main()
 
 	glm::mat4 projection = glm::perspective(camera.GetZoom(), (GLfloat)SCREEN_WIDTH / (GLfloat)SCREEN_HEIGHT, 0.1f, 1000.0f);
 
+	//ISoundEngine *engine = createIrrKlangDevice();
+	irrklang::ISoundEngine* engine = irrklang::createIrrKlangDevice();
+	if (!engine) {
+		return 0;
+	}
+
+	engine->play2D("Media/naruto.mp3", true);
+	
 	//MOUSE CALLBACK
 	glfwSetMouseButtonCallback(window, mouse_button_callback);
 	// Game loop
@@ -615,6 +659,7 @@ int main()
 
 			// Solo realiza ajustes si el mouse se arrastra hacia abajo
 			if (deltaY > 0.0) {
+				activoAnimacion = true;
 				movimientoResorte();
 				mouseX = newMouseX;
 				mouseY = newMouseY;
@@ -622,6 +667,29 @@ int main()
 			}
 		}
 		else {
+			if (activoAnimacion==true)
+			{
+				activoAnimacion = false; for (int i = 0; i < 9; i++)
+				{
+					saveFrame();
+				}
+				if (play == false && (FrameIndex > 1))
+				{
+
+					resetElements();
+					//First Interpolation				
+					interpolation();
+
+					play = true;
+					playIndex = 0;
+					i_curr_steps = 0;
+				}
+				else
+				{
+					play = false;
+				}
+				
+			}
 			test1 = 1.0f;
 			test2 = 0.0f;
 			rotPuerta = 1.0f;
@@ -630,7 +698,7 @@ int main()
 		}
 
 
-
+		
 
 
 		// Use cooresponding shader when setting uniforms/drawing objects
@@ -753,6 +821,18 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		canica1.Draw(lightingShader);
 
+		// Dibuja el objeto 'Canica #1 ANIMADA' 
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(movCANICAX, movCANICAY, movCANICAZ));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		canicaAnimada1.Draw(lightingShader);
+
+		// Dibuja el objeto 'Canica #2 ANIMADA' 
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(posX, posY, posZ));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		canicaAnimada1.Draw(lightingShader);
+
 		// Dibuja el objeto 'Yuta' 
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
@@ -812,9 +892,10 @@ int main()
 		// Dibuja el objeto 'NEMO' 
 		view = camera.GetViewMatrix();
 		model = glm::mat4(1);
-		model = glm::translate(tmp, glm::vec3(0.0f,movNemoY, movNemoZ));
+		model = glm::translate(tmp, glm::vec3(movNemoX,movNemoY, movNemoZ));
 		//model = glm::rotate(model, glm::radians(-rotVentana1), glm::vec3(0.0f, 1.0f, 0.0));
 		//model = glm::translate(model, glm::vec3(10.0f, -40.0f, -15.0f));
+		tmp = model;
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		NemoCuerpo.Draw(lightingShader);
 
@@ -828,7 +909,7 @@ int main()
 
 		view = camera.GetViewMatrix();
 		//model = glm::mat4(1);
-		model = glm::translate(tmp, glm::vec3(-3.6f, 100.0f , 47.2f + movNemoZ));
+		model = glm::translate(tmp, glm::vec3(-3.6f, 100.0f , 47.2f));
 		model = glm::rotate(model, glm::radians(rotVentana1), glm::vec3(0.0f, 1.0f, 0.0));
 		model = glm::translate(model, glm::vec3(3.6f, -100.0f , -47.2f ));
 		//model = glm::translate(model, glm::vec3(posX, posY, posZ));
@@ -989,14 +1070,14 @@ int main()
 
 
 		model = glm::mat4(1);
-		model = glm::translate(model, glm::vec3(4.0f, 0.0f, -4.0f));
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		glEnable(GL_BLEND);//Avtiva la funcionalidad para trabajar el canal alfa
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 1.0f, 1.0f, 1.0f, 0.95f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
+		glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 1.0f, 1.0f, 1.0f, 0.8f);  // Ajusta el valor alfa según tus preferencias
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 0.8f, 0.8f, 1.0f);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.specular"), 1.0f, 1.0f, 1.0f);
-		//cristal.Draw(lightingShader);
+		cristal.Draw(lightingShader);
 		glDisable(GL_BLEND); //Desactiva el canal alfa 
 
 		//Anim2.Use();
@@ -1078,8 +1159,8 @@ int main()
 	}
 
 
-
-
+	
+	engine->drop();
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteVertexArrays(1, &lightVAO);
 	glDeleteBuffers(1, &VBO);
@@ -1139,28 +1220,28 @@ void animacion()
 // Is called whenever a key is pressed/released via GLFW
 void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode)
 {
-	if (keys[GLFW_KEY_5])
-	{	
-		for (int i = 0; i < 9; i++)
-		{
-			saveFrame();
-		}
-		if (play == false && (FrameIndex > 1))
-		{
+	//if (keys[GLFW_KEY_5])
+	//{	
+	//	for (int i = 0; i < 9; i++)
+	//	{
+	//		saveFrame();
+	//	}
+	//	if (play == false && (FrameIndex > 1))
+	//	{
 
-			resetElements();
-			//First Interpolation				
-			interpolation();
+	//		resetElements();
+	//		//First Interpolation				
+	//		interpolation();
 
-			play = true;
-			playIndex = 0;
-			i_curr_steps = 0;
-		}
-		else
-		{
-			play = false;
-		}
-	}
+	//		play = true;
+	//		playIndex = 0;
+	//		i_curr_steps = 0;
+	//	}
+	//	else
+	//	{
+	//		play = false;
+	//	}
+	//}
 
 	if (keys[GLFW_KEY_6])
 	{
@@ -1237,45 +1318,8 @@ void DoMovement()
 		static bool Paleta2abierta = false;
 
 		if (keys[GLFW_KEY_1]) {
-			// Movimientos ALETAS
-			if (direccion==1)
-			{
-				rotVentana1 += 0.5f;
-				movPaleta2 += 0.5f;
-				movPaleta1 += 0.5f;
-				if (rotVentana1>=45.0f)
-				{
-					direccion = 0;
-				}
-			}
-			if (direccion == 0)
-			{
-				rotVentana1 -= 0.5f;
-				movPaleta2 -= 0.5f;
-				movPaleta1 -= 0.5f;
-				if (rotVentana1 <= 0.0f)
-				{
-					direccion = 1;
-				}
-			}
-			//Parte de la Cola
-			if (direccionCola ==1)
-			{
-				movCola += 0.5f;
-				if (movCola >=10.0f)
-				{
-					direccionCola = 0;
-				}
-			}
-			if (direccionCola == 0)
-			{
-				movCola -= 0.5f;
-				if (movCola <= -10.0f)
-				{
-					direccionCola = 1;
-				}
-			}
-
+			
+			animacionCanica();
 
 		}
 		
@@ -1455,33 +1499,117 @@ void DoMovement()
 	//EJE X
 	if (keys[GLFW_KEY_H])
 	{
-		posZ += 0.1;
-		movNemoY -= -0.016081f;
-		movNemoZ += -0.10f;
+		//posZ += 0.1;
+		movNemoY += -0.012081f;
+		movNemoZ -= -0.10f;
+		//movNemoZ += pendienteZ * velocidadZ * deltaTime;
+		// Movimientos ALETAS
+		if (direccion == 1)
+		{
+			rotVentana1 += 0.5f;
+			movPaleta2 += 0.5f;
+			movPaleta1 += 0.5f;
+			if (rotVentana1 >= 45.0f)
+			{
+				direccion = 0;
+			}
+		}
+		if (direccion == 0)
+		{
+			rotVentana1 -= 0.5f;
+			movPaleta2 -= 0.5f;
+			movPaleta1 -= 0.5f;
+			if (rotVentana1 <= 0.0f)
+			{
+				direccion = 1;
+			}
+		}
+		//Parte de la Cola
+		if (direccionCola == 1)
+		{
+			movCola += 0.5f;
+			if (movCola >= 10.0f)
+			{
+				direccionCola = 0;
+			}
+		}
+		if (direccionCola == 0)
+		{
+			movCola -= 0.5f;
+			if (movCola <= -10.0f)
+			{
+				direccionCola = 1;
+			}
+		}
 	}
 	if (keys[GLFW_KEY_Y])
 	{
-		posZ -= 0.1;
+		//posZ -= 0.1;
+		movNemoY -= -0.012081f;
+		movNemoZ += -0.10f;
+		//movNemoZ -= pendienteZ * velocidadZ * deltaTime;
+		// Movimientos ALETAS
+		if (direccion == 1)
+		{
+			rotVentana1 += 0.5f;
+			movPaleta2 += 0.5f;
+			movPaleta1 += 0.5f;
+			if (rotVentana1 >= 45.0f)
+			{
+				direccion = 0;
+			}
+		}
+		if (direccion == 0)
+		{
+			rotVentana1 -= 0.5f;
+			movPaleta2 -= 0.5f;
+			movPaleta1 -= 0.5f;
+			if (rotVentana1 <= 0.0f)
+			{
+				direccion = 1;
+			}
+		}
+		//Parte de la Cola
+		if (direccionCola == 1)
+		{
+			movCola += 0.5f;
+			if (movCola >= 10.0f)
+			{
+				direccionCola = 0;
+			}
+		}
+		if (direccionCola == 0)
+		{
+			movCola -= 0.5f;
+			if (movCola <= -10.0f)
+			{
+				direccionCola = 1;
+			}
+		}
 	}
 	//EJE Z
 	if (keys[GLFW_KEY_G])
 	{
-		posX -= 0.1;
+		//posX -= 0.1;
+		//movNemoY -= pendienteY * velocidadY * deltaTime;
+		movNemoX -= 0.3f;
 	}
 
 	if (keys[GLFW_KEY_J])
 	{
-		posX += 0.1;
+		//posX += 0.1;
+		//movNemoY -= pendienteY * velocidadY * deltaTime;
+		movNemoX += 0.3f;
 	}
 	//EJE Y
 	if (keys[GLFW_KEY_I])
 	{
-		posY -= 0.1;
+		//posY -= 0.1;
 	}
 
 	if (keys[GLFW_KEY_K])
 	{
-		posY += 0.1;
+		//posY += 0.1;
 	}
 
 
@@ -1514,11 +1642,35 @@ void DoMovement()
 		camera.ProcessKeyboard(RIGHT, deltaTime);
 	}
 
-
+	
 
 
 
 
 }
+void animacionCanica() {
+	animateTo(glm::vec3(26.800079f, 102.798996f, -27.800072f));
+	animateTo(glm::vec3(20.500055f, 102.798996f, -31.000084f));
+	animateTo(glm::vec3(8.100008f, 102.798996f, -14.800022f));
+	animateTo(glm::vec3(7.200008f, 102.798996f, -18.000034f));
+	animateTo(glm::vec3(1.300013f, 97.999069f, 62.399620f));
+	animateTo(glm::vec3(-6.299984f, 97.999069f, 68.699524f));
+	animateTo(glm::vec3(0.0f, 0.0f, 0.0f));
+}
+void animateTo(glm::vec3 target) {
+	const float step = 0.5f;
 
+	while (movCANICAX != target.x || movCANICAY != target.y || movCANICAZ != target.z) {
+		if (movCANICAX < target.x) movCANICAX += step;
+		else if (movCANICAX > target.x) movCANICAX -= step;
 
+		if (movCANICAY < target.y) movCANICAY += step;
+		else if (movCANICAY > target.y) movCANICAY -= step;
+
+		if (movCANICAZ < target.z) movCANICAZ += step;
+		else if (movCANICAZ > target.z) movCANICAZ -= step;
+
+		// Puedes imprimir las coordenadas si lo deseas
+		std::cout << "Coordinates: (" << movCANICAX << ", " << movCANICAY << ", " << movCANICAZ << ")\n";
+	}
+}

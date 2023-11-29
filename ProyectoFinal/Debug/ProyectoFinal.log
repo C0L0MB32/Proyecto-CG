@@ -1,18 +1,21 @@
 ﻿  317144262_PROYECTOFINAL2024-1_GRUPO07.cpp
 D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(295,21): warning C4305: '+=': truncamiento de 'double' a 'float'
-D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(592,24): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1205,11): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1206,11): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1210,18): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1211,18): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1213,10): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1214,10): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
-D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1306,23): warning C4305: '-=': truncamiento de 'double' a 'float'
-D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1312,24): warning C4305: '+=': truncamiento de 'double' a 'float'
-D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1457,14): warning C4305: '+=': truncamiento de 'double' a 'float'
-D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1463,14): warning C4305: '-=': truncamiento de 'double' a 'float'
-D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1468,14): warning C4305: '-=': truncamiento de 'double' a 'float'
-D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1473,14): warning C4305: '+=': truncamiento de 'double' a 'float'
-D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1478,14): warning C4305: '-=': truncamiento de 'double' a 'float'
-D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1483,14): warning C4305: '+=': truncamiento de 'double' a 'float'
+D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(304,7): warning C4101: 'keys': variable local sin referencia
+D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(325,7): warning C4101: 'keys': variable local sin referencia
+D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(637,24): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1290,11): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1291,11): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1295,18): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1296,18): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1298,10): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1299,10): warning C4244: '=': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1351,23): warning C4305: '-=': truncamiento de 'double' a 'float'
+D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1357,24): warning C4305: '+=': truncamiento de 'double' a 'float'
+D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1502,14): warning C4305: '+=': truncamiento de 'double' a 'float'
+D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1547,14): warning C4305: '-=': truncamiento de 'double' a 'float'
+D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1593,14): warning C4305: '-=': truncamiento de 'double' a 'float'
+D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1600,14): warning C4305: '+=': truncamiento de 'double' a 'float'
+D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1607,14): warning C4305: '-=': truncamiento de 'double' a 'float'
+D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\ProyectoFinal\317144262_PROYECTOFINAL2024-1_GRUPO07.cpp(1612,14): warning C4305: '+=': truncamiento de 'double' a 'float'
+soil2-debug.lib(image_DXT.obj) : warning LNK4099: no se encontró PDB '' con 'soil2-debug.lib(image_DXT.obj)' o en ''; se vinculará el objeto sin tener en cuenta información de depuración
   ProyectoFinal.vcxproj -> D:\FI UNAM SEMESTRES\Semestre 9\Compu Gráfica\Git\Proyecto\Proyecto-CG\Debug\ProyectoFinal.exe
