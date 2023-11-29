@@ -1319,7 +1319,7 @@ void DoMovement()
 
 		if (keys[GLFW_KEY_1]) {
 			
-			animacionCanica();
+			
 
 		}
 		
