@@ -239,6 +239,7 @@ float test2 = 0.0f;
 float movPalanca = 0.0f;
 float movPaleta1 = 0.0f;
 float movPaleta2 = 0.0f;
+float movPaleta3 = 0.0f;
 
 //MOV NEMO
 float movNemoX = 0.0f;
@@ -247,7 +248,7 @@ float movNemoZ = 0.0f;
 
 float pendienteZ = (-36.300022 - 76.699402) / (29.300089 - 29.300089);  // Calcula la pendiente en el eje Z
 float pendienteY = (98.699059 - 96.099098) / (29.300089 - 29.300089);  // Calcula la pendiente en el eje Y
-
+float movAletaPequena = 0.0f;
 // Ajusta la velocidad del movimiento
 float velocidadZ = 0.1f;   // Ajusta según sea necesario
 float velocidadY = 0.01f;  // Ajusta según sea necesario
@@ -255,6 +256,7 @@ float velocidadY = 0.01f;  // Ajusta según sea necesario
 //MOV PALETAS
 int direccionPaleta1 = 1;
 int direccionPaleta2 = 1;
+int direccionPaleta3 = 1;
 
 //MOV CANICA
 float movCANICAX = 0.0f;
@@ -296,38 +298,23 @@ void movimientoResorte() {
 	}
 }
 
-void vista1() {
-	// Cambiar la posición inicial de la cámara para una vista isométrica
-	Camera camera(glm::vec3(-2.0f, 200.0f, 50.0f), glm::vec3(0.0f, -1.0f, 0.0f)); // Ajusta la orientación inicial hacia abajo
-	GLfloat lastX = WIDTH / 2.0;
-	GLfloat lastY = HEIGHT / 2.0;
-	bool keys[1024];
-	bool firstMouse = true;
-	float range = 0.0f;
-	float rot = 0.0f;
-}
-//void vista2() {
-	// Ajusta la posición de la cámara para seguir a Nemo
-	Camera  camera(glm::vec3(movNemoX, movNemoY + 5.0f, movNemoZ + 10.0f));
-	GLfloat lastX = WIDTH / 2.0;
-	GLfloat lastY = HEIGHT / 2.0;
-	bool keys[1024];
-	bool firstMouse = true;
-	float range = 0.0f;
-	float rot = 0.0f;
-//}
-
-void vista3() {
-	// Camera Libre
-	Camera  camera(glm::vec3(-100.0f, 2.0f, -45.0f));
-	GLfloat lastX = WIDTH / 2.0;
-	GLfloat lastY = HEIGHT / 2.0;
-	bool keys[1024];
-	bool firstMouse = true;
-	float range = 0.0f;
-	float rot = 0.0f;
-}
-
+// Ajusta la posición de la cámara
+Camera  camera(glm::vec3(0.0f, 105.0f, 0.0f));
+Camera  camera1(glm::vec3(0.0f, 105.0f, 0.0f));
+Camera  camera2(glm::vec3(movNemoX - 2.3f, movNemoY + 103.0f, movNemoZ + 47.0f));
+Camera camera3(glm::vec3(-2.0f, 150.0f, 50.0f));
+GLfloat lastX = WIDTH / 2.0;
+GLfloat lastY = HEIGHT / 2.0;
+bool keys[1024];
+bool firstMouse = true;
+float range = 0.0f;
+float rot = 0.0f;
+int modoCamara = 1;
+GLfloat lastX_Cam1, lastY_Cam1;
+GLfloat lastX_Cam2, lastY_Cam2;
+GLfloat lastX_Cam3, lastY_Cam3;
+bool firstMouse_Cam1 = true, firstMouse_Cam2 = true, firstMouse_Cam3 = true;
+irrklang::ISoundEngine* engine = irrklang::createIrrKlangDevice();
 
 
 int main()
@@ -392,6 +379,7 @@ int main()
 	Model tunel((char*)"Models/Pinball/tunel.obj");
 	Model paleta1((char*)"Models/Pinball/paletazquierda.obj");
 	Model paleta2((char*)"Models/Pinball/paletaDerecha.obj");
+	Model paleta3((char*)"Models/Pinball/paletaSuperior.obj");
 	Model canica1((char*)"Models/Pinball/canica1.obj");
 	Model canicaAnimada1((char*)"Models/Pinball/canicaAnimada1.obj");
 	Model Yuta((char*)"Models/Yuta/yuta.obj");
@@ -620,7 +608,7 @@ int main()
 	glm::mat4 projection = glm::perspective(camera.GetZoom(), (GLfloat)SCREEN_WIDTH / (GLfloat)SCREEN_HEIGHT, 0.1f, 1000.0f);
 
 	//ISoundEngine *engine = createIrrKlangDevice();
-	irrklang::ISoundEngine* engine = irrklang::createIrrKlangDevice();
+	//irrklang::ISoundEngine* engine = irrklang::createIrrKlangDevice();
 	if (!engine) {
 		return 0;
 	}
@@ -901,9 +889,9 @@ int main()
 
 		view = camera.GetViewMatrix();
 		//model = glm::mat4(1);
-		model = glm::translate(tmp, glm::vec3(-2.3f, 100.0f, 49.9f));
+		model = glm::translate(tmp, glm::vec3(-2.3f, 100.0f, 50.6f));
 		model = glm::rotate(model, glm::radians(movCola), glm::vec3(0.0f, 1.0f, 0.0));
-		model = glm::translate(model, glm::vec3(2.3f, -100.0f, -49.9f));
+		model = glm::translate(model, glm::vec3(2.3f, -100.0f, -50.65f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		cola.Draw(lightingShader);
 
@@ -919,7 +907,7 @@ int main()
 		view = camera.GetViewMatrix();
 		//model = glm::mat4(1);
 		model = glm::translate(tmp, glm::vec3(-1.0f, 100.0f , 47.2f));
-		model = glm::rotate(model, glm::radians(-rotVentana1), glm::vec3(0.0f, 1.0f, 0.0));
+		model = glm::rotate(model, glm::radians(-movAletaPequena), glm::vec3(0.0f, 1.0f, 0.0));
 		model = glm::translate(model, glm::vec3(1.0f, -100.0f, -47.2f ));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		aletaPequena.Draw(lightingShader);
@@ -976,6 +964,12 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		paleta2.Draw(lightingShader);
 
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(-24.5f, 101.3f, 22.6f));
+		model = glm::rotate(model, glm::radians(-movPaleta3), glm::vec3(0.0f, 1.0f, 0.0));
+		model = glm::translate(model, glm::vec3(24.5f, -101.3f, -22.6f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		paleta3.Draw(lightingShader);
 
 		glBindVertexArray(0);
 
@@ -1314,12 +1308,14 @@ void DoMovement()
 		static bool teclaPresionada3 = false;
 		static bool teclaPresionadaPaleta1 = false;
 		static bool teclaPresionadaPaleta2 = false;
+		static bool teclaPresionadaPaleta3 = false;
 		static bool Paleta1abierta = false;
 		static bool Paleta2abierta = false;
+		static bool Paleta3abierta = false;
 
 		if (keys[GLFW_KEY_1]) {
 			
-			
+			engine->play2D("Media/ping.mp3", false);
 
 		}
 		
@@ -1495,151 +1491,284 @@ void DoMovement()
 			movPaleta2 = 0.0f;
 		}
 	}
-	//Mov Personaje
-	//EJE X
+	if (keys[GLFW_KEY_B]) {
+		if (!teclaPresionadaPaleta3) {
+			teclaPresionadaPaleta3 = true;  // Marcar la tecla como presionada
+
+			if (!Paleta3abierta)
+				// Estado: Ventana Cerrada
+				Paleta3abierta = true;
+			else
+				// Estado: Ventana Abierta
+				Paleta3abierta = false;
+		}
+	}
+	else {
+		teclaPresionadaPaleta3 = false;
+	}
+	if (Paleta3abierta) {
+		if (movPaleta3 < 45.0f) {
+			movPaleta3 += 3.0f;
+		}
+		else {
+			movPaleta3 = 45.0f;
+		}
+	}
+	else {
+		if (movPaleta3 > 0.0f) {
+			movPaleta3 -= 3.0f;
+		}
+		else {
+			movPaleta3 = 0.0f;
+		}
+	}
+	//CAMBIAR CAMARAS
+	if (keys[GLFW_KEY_8]) {
+		if (modoCamara!=1)
+		{
+			if (modoCamara == 2)
+			{
+				camera2.SetPosition(camera.GetPosition());
+				camera2.SetPitch(camera.GetPitch());
+				camera2.SetYaw(camera.GetYaw());
+
+			}
+			else if (modoCamara == 3) {
+				camera3.SetPosition(camera.GetPosition());
+				camera3.SetPitch(camera.GetPitch());
+				camera3.SetYaw(camera.GetYaw());
+
+			}
+			modoCamara = 1;
+			camera.SetPosition(camera1.GetPosition());
+			camera.SetPitch(camera1.GetPitch());
+			camera.SetYaw(camera1.GetYaw());
+		}
+	}
+	if (keys[GLFW_KEY_9]) {
+		if (modoCamara!=2)
+		{
+			if (modoCamara == 1)
+			{
+				camera1.SetPosition(camera.GetPosition());
+				camera1.SetPitch(camera.GetPitch());
+				camera1.SetYaw(camera.GetYaw());
+
+			}
+			else if (modoCamara == 3) {
+				camera3.SetPosition(camera.GetPosition());
+				camera3.SetPitch(camera.GetPitch());
+				camera3.SetYaw(camera.GetYaw());
+
+			}
+			modoCamara = 2;
+			camera.SetPosition(camera2.GetPosition());
+			camera.SetPitch(camera2.GetPitch());
+			camera.SetYaw(camera2.GetYaw());
+		}
+	}
+	if (keys[GLFW_KEY_0]) {
+		if (modoCamara!=3)
+		{
+		if (modoCamara == 1)
+		{
+			camera1.SetPosition(camera.GetPosition());
+			camera1.SetPitch(camera.GetPitch());
+			camera1.SetYaw(camera.GetYaw());
+		}
+		else if (modoCamara == 2) {
+			camera2.SetPosition(camera.GetPosition());
+			camera2.SetPitch(camera.GetPitch());
+			camera2.SetYaw(camera.GetYaw());
+
+		}
+		modoCamara = 3;
+
+		camera.SetPosition(camera3.GetPosition());
+		camera.SetPitch(camera3.GetPitch());
+		camera.SetYaw(camera3.GetYaw());
+		}
+	}
+
+	///EJE X
 	if (keys[GLFW_KEY_H])
-	{
-		//posZ += 0.1;
-		movNemoY += -0.012081f;
-		movNemoZ -= -0.10f;
-		//movNemoZ += pendienteZ * velocidadZ * deltaTime;
-		// Movimientos ALETAS
-		if (direccion == 1)
-		{
-			rotVentana1 += 0.5f;
-			movPaleta2 += 0.5f;
-			movPaleta1 += 0.5f;
-			if (rotVentana1 >= 45.0f)
-			{
-				direccion = 0;
-			}
-		}
-		if (direccion == 0)
-		{
-			rotVentana1 -= 0.5f;
-			movPaleta2 -= 0.5f;
-			movPaleta1 -= 0.5f;
-			if (rotVentana1 <= 0.0f)
-			{
-				direccion = 1;
-			}
-		}
-		//Parte de la Cola
-		if (direccionCola == 1)
-		{
-			movCola += 0.5f;
-			if (movCola >= 10.0f)
-			{
-				direccionCola = 0;
-			}
-		}
-		if (direccionCola == 0)
-		{
-			movCola -= 0.5f;
-			if (movCola <= -10.0f)
-			{
-				direccionCola = 1;
-			}
-		}
-	}
+		posZ += 0.1;
 	if (keys[GLFW_KEY_Y])
-	{
-		//posZ -= 0.1;
-		movNemoY -= -0.012081f;
-		movNemoZ += -0.10f;
-		//movNemoZ -= pendienteZ * velocidadZ * deltaTime;
-		// Movimientos ALETAS
-		if (direccion == 1)
-		{
-			rotVentana1 += 0.5f;
-			movPaleta2 += 0.5f;
-			movPaleta1 += 0.5f;
-			if (rotVentana1 >= 45.0f)
-			{
-				direccion = 0;
-			}
-		}
-		if (direccion == 0)
-		{
-			rotVentana1 -= 0.5f;
-			movPaleta2 -= 0.5f;
-			movPaleta1 -= 0.5f;
-			if (rotVentana1 <= 0.0f)
-			{
-				direccion = 1;
-			}
-		}
-		//Parte de la Cola
-		if (direccionCola == 1)
-		{
-			movCola += 0.5f;
-			if (movCola >= 10.0f)
-			{
-				direccionCola = 0;
-			}
-		}
-		if (direccionCola == 0)
-		{
-			movCola -= 0.5f;
-			if (movCola <= -10.0f)
-			{
-				direccionCola = 1;
-			}
-		}
-	}
+		posZ -= 0.1;
 	//EJE Z
 	if (keys[GLFW_KEY_G])
-	{
-		//posX -= 0.1;
-		//movNemoY -= pendienteY * velocidadY * deltaTime;
-		movNemoX -= 0.3f;
-	}
+		posX -= 0.1;
 
 	if (keys[GLFW_KEY_J])
-	{
-		//posX += 0.1;
-		//movNemoY -= pendienteY * velocidadY * deltaTime;
-		movNemoX += 0.3f;
-	}
+		posX += 0.1;
 	//EJE Y
 	if (keys[GLFW_KEY_I])
-	{
-		//posY -= 0.1;
-	}
-
+		posY -= 0.1;
 	if (keys[GLFW_KEY_K])
-	{
-		//posY += 0.1;
-	}
+		posY += 0.1;
 
 
-
-
-	// Camera controls
+	// Camera controls & character movement
 	if (keys[GLFW_KEY_W] || keys[GLFW_KEY_UP])
 	{
-		camera.ProcessKeyboard(FORWARD, deltaTime*20);
+		if (modoCamara == 1)
+		{
+			camera.ProcessKeyboard(FORWARD, deltaTime);
+		}
+		else if (modoCamara == 2)
+		{
+			movNemoY -= -0.012081f;
+			movNemoZ += -0.10f;
+			// Movimientos ALETAS
+			if (direccion == 1)
+			{
+				rotVentana1 += 0.5f;
+				movAletaPequena += 0.7;
+				if (rotVentana1 >= 45.0f)
+					direccion = 0;
+			}
+			if (direccion == 0)
+			{
+				rotVentana1 -= 0.5f;
+				movAletaPequena -= 0.7;
+				if (rotVentana1 <= 0.0f)
+					direccion = 1;
+			}
+			//Parte de la Cola
+			if (direccionCola == 1)
+			{
+				movCola += 0.7f;
+				if (movCola >= 10.0f)
+					direccionCola = 0;
+			}
+			if (direccionCola == 0)
+			{
+				movCola -= 0.7f;
+				if (movCola <= -10.0f)
+					direccionCola = 1;
+			}
+			camera.SetPositionNemo(glm::vec3(movNemoX, movNemoY, movNemoZ));
+		}
 
 
 	}
 
 	if (keys[GLFW_KEY_S] || keys[GLFW_KEY_DOWN])
 	{
-		camera.ProcessKeyboard(BACKWARD, deltaTime);
+		if (modoCamara == 1)
+			camera.ProcessKeyboard(BACKWARD, deltaTime);
+		else if (modoCamara == 2)
+		{
+			movNemoY += -0.012081f;
+			movNemoZ -= -0.10f;
+			// Movimientos ALETAS
+			if (direccion == 1)
+			{
+				rotVentana1 += 0.5f;
+				movAletaPequena += 0.7;
+				if (rotVentana1 >= 45.0f)
+					direccion = 0;
+			}
+			if (direccion == 0)
+			{
+				rotVentana1 -= 0.5f;
+				movAletaPequena -= 0.7;
+				if (rotVentana1 <= 0.0f)
+					direccion = 1;
+			}
+			//Parte de la Cola
+			if (direccionCola == 1)
+			{
+				movCola += 0.7f;
+				if (movCola >= 15.0f)
+					direccionCola = 0;
+			}
+			if (direccionCola == 0)
+			{
+				movCola -= 0.7f;
+				if (movCola <= -15.0f)
+					direccionCola = 1;
+			}
+			camera.SetPositionNemo(glm::vec3(movNemoX, movNemoY, movNemoZ));
+		}
 
 
 	}
 
 	if (keys[GLFW_KEY_A] || keys[GLFW_KEY_LEFT])
 	{
-		camera.ProcessKeyboard(LEFT, deltaTime);
+		if (modoCamara == 1)
+			camera.ProcessKeyboard(LEFT, deltaTime);
+		else if (modoCamara == 2)
+		{
+			movNemoX -= 0.2f;
+			// Movimientos ALETAS
+			if (direccion == 1)
+			{
+				movAletaPequena += 0.7;
+				if (movAletaPequena >= 45.0f)
+					direccion = 0;
+			}
+			if (direccion == 0)
+			{
+				movAletaPequena -= 0.7;
+				if (movAletaPequena <= 0.0f)
+					direccion = 1;
+			}
+			//Parte de la Cola
+			if (direccionCola == 1)
+			{
+				movCola += 0.7f;
+				if (movCola >= 15.0f)
+					direccionCola = 0;
+			}
+			if (direccionCola == 0)
+			{
+				movCola -= 0.7f;
+				if (movCola <= -15.0f)
+					direccionCola = 1;
+			}
+			camera.SetPositionNemo(glm::vec3(movNemoX, movNemoY, movNemoZ));
+		}
 
 
 	}
 
 	if (keys[GLFW_KEY_D] || keys[GLFW_KEY_RIGHT])
 	{
-		camera.ProcessKeyboard(RIGHT, deltaTime);
+		if (modoCamara == 1)
+			camera.ProcessKeyboard(RIGHT, deltaTime);
+		else if (modoCamara == 2)
+		{
+			movNemoX += 0.2f;
+			// Movimientos ALETAS
+			if (direccion == 1)
+			{
+				rotVentana1 += 0.5f;
+				if (rotVentana1 >= 45.0f)
+					direccion = 0;
+			}
+			if (direccion == 0)
+			{
+				rotVentana1 -= 0.5f;
+				if (rotVentana1 <= 0.0f)
+					direccion = 1;
+			}
+			//Parte de la Cola
+			if (direccionCola == 1)
+			{
+				movCola += 0.7f;
+				if (movCola >= 15.0f)
+					direccionCola = 0;
+			}
+			if (direccionCola == 0)
+			{
+				movCola -= 0.7f;
+				if (movCola <= -15.0f)
+					direccionCola = 1;
+			}
+			camera.SetPositionNemo(glm::vec3(movNemoX, movNemoY, movNemoZ));
+		}
 	}
 
 	

@@ -121,7 +121,7 @@ public:
 		this->updateCameraVectors();
 	}
 
-	
+
 	// Processes input received from a mouse scroll-wheel event. Only requires input on the vertical wheel-axis
 	void ProcessMouseScroll(GLfloat yOffset)
 	{
@@ -137,7 +137,36 @@ public:
 	{
 		return this->position;
 	}
+	void SetPosition(glm::vec3 position)
+	{
+		this->position = position;
+	}
 
+	GLfloat GetPitch()
+	{
+		return this->pitch;
+	}
+	void SetPitch(GLfloat pitch)
+	{
+		this->pitch = pitch;
+	}
+
+	GLfloat GetYaw()
+	{
+		return this->yaw;
+	}
+	void SetYaw(GLfloat yaw)
+	{
+		this->yaw = yaw;
+	}
+
+
+
+	//MovNemo
+	void SetPositionNemo(glm::vec3 position)
+	{
+		this->position = position + glm::vec3(-2.3f, 103.0f, 47.2f);
+	}
 	glm::vec3 GetFront()
 	{
 		return this->front;

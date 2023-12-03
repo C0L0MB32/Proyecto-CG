@@ -371,7 +371,7 @@ illum 4
 Kd 0.00 0.00 0.00
 Ka 0.00 0.00 0.00
 Tf 1.00 1.00 1.00
-map_Kd blanco.JPG
+map_Kd pisoDePiedra.jpg
 Ni 1.00
 newmtl lambert15SG
 illum 4
@@ -501,6 +501,13 @@ map_Kd nemo_diff.png
 Ni 1.55
 Ks 0.00 0.00 0.00
 Ns -1.96
+newmtl pasted__lambert29SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd azulMarino.JPG
+Ni 1.00
 newmtl phong2SG
 illum 4
 Kd 0.00 0.00 0.00
@@ -519,6 +526,15 @@ map_Kd esferaIMG.JPG
 Ni 1.00
 Ks 0.76 0.76 0.76
 Ns 8.17
+newmtl phong4SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd glass2.jpg
+Ni 1.00
+Ks 0.33 0.33 0.33
+Ns 18.00
 newmtl rika:brush_Wire
 illum 4
 Kd 0.00 0.00 0.00
