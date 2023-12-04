@@ -191,6 +191,7 @@ void resetElements(void)
 	rotZ = KeyFrame[0].rotZ;
 
 }
+irrklang::ISoundEngine* engine = irrklang::createIrrKlangDevice();
 
 void interpolation(void)
 {
@@ -201,7 +202,10 @@ void interpolation(void)
 	KeyFrame[playIndex].rotIncX = (KeyFrame[playIndex + 1].rotX - KeyFrame[playIndex].rotX) / i_max_steps;
 	KeyFrame[playIndex].rotIncY = (KeyFrame[playIndex + 1].rotY - KeyFrame[playIndex].rotY) / i_max_steps;
 	KeyFrame[playIndex].rotIncZ = (KeyFrame[playIndex + 1].rotZ - KeyFrame[playIndex].rotZ) / i_max_steps;
-
+	if (playIndex == 6)
+	{
+		engine->play2D("Media/ping.mp3", false);
+	}
 }
 
 
@@ -262,13 +266,24 @@ int direccionPaleta3 = 1;
 float movCANICAX = 0.0f;
 float movCANICAY = 0.0f;
 float movCANICAZ = 0.0f;
-void animacionCanica();
-void animateTo(glm::vec3 target);
+void animateTo();
+bool state1 = true;
+bool state2 = false;
+bool state3 = false;
+bool state4 = false;
+bool state5 = false;
+bool state6 = false;
+bool state7 = false;
+bool stateCanica1 = false;
+//MO Homero
+float movHomero = 0.0f;
+
 //MOUSE CALLBACK
 bool mousePresionado = false;
 double mouseX, mouseY;
 
 bool activoAnimacion = false;
+bool SelAnimacion = true;
 
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
 	if (button == GLFW_MOUSE_BUTTON_LEFT) {
@@ -302,7 +317,7 @@ void movimientoResorte() {
 Camera  camera(glm::vec3(0.0f, 105.0f, 0.0f));
 Camera  camera1(glm::vec3(0.0f, 105.0f, 0.0f));
 Camera  camera2(glm::vec3(movNemoX - 2.3f, movNemoY + 103.0f, movNemoZ + 47.0f));
-Camera camera3(glm::vec3(-2.0f, 150.0f, 50.0f));
+Camera camera3(glm::vec3(-2.0f, 150.0f, 85.0f));
 GLfloat lastX = WIDTH / 2.0;
 GLfloat lastY = HEIGHT / 2.0;
 bool keys[1024];
@@ -314,7 +329,6 @@ GLfloat lastX_Cam1, lastY_Cam1;
 GLfloat lastX_Cam2, lastY_Cam2;
 GLfloat lastX_Cam3, lastY_Cam3;
 bool firstMouse_Cam1 = true, firstMouse_Cam2 = true, firstMouse_Cam3 = true;
-irrklang::ISoundEngine* engine = irrklang::createIrrKlangDevice();
 
 
 int main()
@@ -401,8 +415,12 @@ int main()
 	Model estructura((char*)"Models/Palanca/estructura.obj");
 	Model palanca((char*)"Models/Palanca/palanca.obj");
 	Model resorte((char*)"Models/Palanca/resorte.obj");
-	
-
+	//HOMERO
+	Model cabeza((char*)"Models/Homero/head.obj");
+	Model ojo1((char*)"Models/Homero/leftEye.obj");
+	Model ojo2((char*)"Models/Homero/rigthEye.obj");
+	//SKYBOX
+	Model box((char*)"Models/Pinball/box.obj");
 
 
 	// Build and compile our shader program
@@ -655,28 +673,36 @@ int main()
 			}
 		}
 		else {
-			if (activoAnimacion==true)
+			if (activoAnimacion == true)
 			{
-				activoAnimacion = false; for (int i = 0; i < 9; i++)
+				if (SelAnimacion == false)
 				{
-					saveFrame();
-				}
-				if (play == false && (FrameIndex > 1))
-				{
+					stateCanica1 = true;
 
-					resetElements();
-					//First Interpolation				
-					interpolation();
+				}
+				else if (SelAnimacion == true) {
+					activoAnimacion = false; for (int i = 0; i < 9; i++)
+					{
+						saveFrame();
+					}
+					if (play == false && (FrameIndex > 1))
+					{
 
-					play = true;
-					playIndex = 0;
-					i_curr_steps = 0;
+						resetElements();
+						//First Interpolation				
+						interpolation();
+
+						play = true;
+						playIndex = 0;
+						i_curr_steps = 0;
+					}
+					else
+					{
+						play = false;
+					}
 				}
-				else
-				{
-					play = false;
-				}
-				
+
+
 			}
 			test1 = 1.0f;
 			test2 = 0.0f;
@@ -801,7 +827,7 @@ int main()
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		tunel.Draw(lightingShader);
+		//tunel.Draw(lightingShader);
 
 		// Dibuja el objeto 'Canica #1' 
 		model = glm::mat4(1);
@@ -875,7 +901,26 @@ int main()
 		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		//nemo.Draw(lightingShader);
 
+		//Homero
+		model = glm::mat4(1);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 0.0f, 0.0f, 1.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "material.specular"), 1.0f, 0.5f, 0.0f);
+		model = glm::translate(tmp, glm::vec3(0.0f, -0.5f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		cabeza.Draw(lightingShader);
 
+		model = glm::translate(tmp, glm::vec3(8.7f, 105.4f, -25.2f));
+		model = glm::rotate(model, glm::radians(movHomero), glm::vec3(0.0f, 1.0f, 0.0));
+		model = glm::translate(model, glm::vec3(-8.7f, -105.9f, 25.2f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		ojo1.Draw(lightingShader);
+
+		model = glm::translate(tmp, glm::vec3(9.200012, 105.4f, -25.7f));
+		model = glm::rotate(model, glm::radians(-movHomero), glm::vec3(0.0f, 1.0f, 0.0));
+		model = glm::translate(model, glm::vec3(-9.200012, -105.9f, 25.7f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		ojo2.Draw(lightingShader);
 
 		// Dibuja el objeto 'NEMO' 
 		view = camera.GetViewMatrix();
@@ -966,101 +1011,38 @@ int main()
 
 		model = glm::mat4(1);
 		model = glm::translate(model, glm::vec3(-24.5f, 101.3f, 22.6f));
-		model = glm::rotate(model, glm::radians(-movPaleta3), glm::vec3(0.0f, 1.0f, 0.0));
+		model = glm::rotate(model, glm::radians(movPaleta3), glm::vec3(0.0f, 1.0f, 0.0));
 		model = glm::translate(model, glm::vec3(24.5f, -101.3f, -22.6f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		paleta3.Draw(lightingShader);
 
+		
+
+		//Homero2
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(-25.1f, -2.0f, 45.2f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		cabeza.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(-25.1f, -2.0f, 45.2f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		ojo1.Draw(lightingShader);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(-25.1f, -2.0f, 45.2f));
+		model = glm::scale(model, glm::vec3(1.0f, 1.0f, rotPuerta));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		ojo2.Draw(lightingShader);
+
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		box.Draw(lightingShader);
+
+
 		glBindVertexArray(0);
-
-
-		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		//Piso.Draw(lightingShader);
-		//// Dibuja el objeto 'tv'
-		//model = glm::mat4(1);
-		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		//tv.Draw(lightingShader);
-
-		//// Dibuja el objeto 'pantallaNegra'
-		//model = glm::mat4(1);
-		//model = glm::translate(model, glm::vec3(pantalla1, -4.165f, -0.168f)); //Parte oculta -> 2.0 En X  & 1.42 cuando se muestra
-		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		//pantallaNegra.Draw(lightingShader);
-
-		//// Dibuja el objeto 'pantallaEsperanza'
-		//model = glm::mat4(1);
-		//model = glm::translate(model, glm::vec3(pantalla2, -2.0f, 0.0f)); //Parte oculta -> 2.0 En X  & 0.77 cuando se muestra
-		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		//pantallaEspernza.Draw(lightingShader);
-
-		//// Dibuja el objeto 'pantallaSinCanal'
-		////model = glm::mat4(1);
-		////model = glm::translate(model, glm::vec3(pantalla3, 0.0f, 0.0f)); //Parte oculta -> 3.0 En X & 1.78 cuando se muestra
-		////glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		////pantallaSinCanal.Draw(lightingShader);
-
-		//
-
-		////lightingShader.Use();
-
-		//// Dibuja el objeto 'piano' 
-		//model = glm::mat4(1);
-		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		//piano.Draw(lightingShader);
-		//
-		//// Dibuja el objeto 'nota' 
-		//model = glm::mat4(1.0f);
-		//model = glm::translate(model, glm::vec3(posX, posY, posZ));
-		//model = glm::rotate(model, glm::radians(rotX), glm::vec3(1.0f, 0.0f, 0.0f));
-		//model = glm::rotate(model, glm::radians(rotY), glm::vec3(0.0f, 1.0f, 0.0f));
-		//model = glm::rotate(model, glm::radians(rotZ), glm::vec3(0.0f, 0.0f, 1.0f));
-
-		//// Establece la matriz de modelo en el shader
-		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-
-		//// Dibuja el objeto 'nota'
-		//nota.Draw(lightingShader);
-
-
-
-
-
-		//// Dibuja el objeto 'ventana' 
-		//view = camera.GetViewMatrix();
-		//model = glm::mat4(1);
-		//model = glm::translate(tmp, glm::vec3(-7.7f, 0.0f, 15.7f));
-		//model = glm::rotate(model, glm::radians(-rotVentana1), glm::vec3(0.0f, 1.0f, 0.0));
-		//model = glm::translate(model, glm::vec3(7.7f, 0.0f, -15.7f));
-		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		//ventana1.Draw(lightingShader);
-
-		//view = camera.GetViewMatrix();
-		//model = glm::mat4(1);
-		//model = glm::translate(tmp, glm::vec3(-4.1f, 0.0f, 15.7f));
-		//model = glm::rotate(model, glm::radians(rotVentana1), glm::vec3(0.0f, 1.0f, 0.0));
-		//model = glm::translate(model, glm::vec3(4.1f, 0.0f, -15.7f));
-		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		//ventana2.Draw(lightingShader);
-
-
-		//// Dibuja el objeto 'ventana2' 
-		//view = camera.GetViewMatrix();
-		//model = glm::mat4(1);
-		//model = glm::translate(tmp, glm::vec3(-15.6f, 0.0f, 15.7f));
-		//model = glm::rotate(model, glm::radians(-rotVentana1), glm::vec3(0.0f, 1.0f, 0.0));
-		//model = glm::translate(model, glm::vec3(7.6f, 0.0f, -15.7f));
-		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		//ventana1.Draw(lightingShader);
-
-		//view = camera.GetViewMatrix();
-		//model = glm::mat4(1);
-		//model = glm::translate(tmp, glm::vec3(-12.1f, 0.0f, 15.7f));
-		//model = glm::rotate(model, glm::radians(rotVentana1), glm::vec3(0.0f, 1.0f, 0.0));
-		//model = glm::translate(model, glm::vec3(4.1f, 0.0f, -15.7f));
-		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		//ventana2.Draw(lightingShader);
 
 
 		model = glm::mat4(1);
@@ -1074,34 +1056,34 @@ int main()
 		cristal.Draw(lightingShader);
 		glDisable(GL_BLEND); //Desactiva el canal alfa 
 
-		//Anim2.Use();
-		//tiempo = glfwGetTime() * 10.0f;
-		//// Get location objects for the matrices on the lamp shader (these could be different on a different shader)
+		Anim2.Use();
+		tiempo = glfwGetTime() * 10.0f;
+		// Get location objects for the matrices on the lamp shader (these could be different on a different shader)
 
-		//model = glm::mat4(1.0f); // Inicializa la matriz de modelo como una matriz de identidad
-		//float translationX = velocidad * glfwGetTime(); // Ajusta la velocidad de traslación según tus necesidades
-		//model = glm::translate(model, glm::vec3(0.0f, 0.1f, translationX));
-		//model = glm::translate(model, glm::vec3(pantalla3, -0.1f, 0.0f)); // Parte oculta -> 3.0 En X & 1.78 cuando se muestra
+		model = glm::mat4(1.0f); // Inicializa la matriz de modelo como una matriz de identidad
+		float translationX = velocidad * glfwGetTime(); // Ajusta la velocidad de traslación según tus necesidades
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, translationX));
+		model = glm::translate(model, glm::vec3(0.0, 0.0f, 0.0f)); // Parte oculta -> 3.0 En X & 1.78 cuando se muestra
 
-		//modelLoc = glGetUniformLocation(Anim2.Program, "model");
-		//viewLoc = glGetUniformLocation(Anim2.Program, "view");
-		//projLoc = glGetUniformLocation(Anim2.Program, "projection");
-		//// Set matrices
-		//glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-		//glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
-		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		//glUniform1f(glGetUniformLocation(Anim2.Program, "time"), tiempo);
-		//model = glm::translate(model, glm::vec3(0.0, 0.0f * glfwGetTime(), 0.0f));
-		//model = glm::translate(model, glm::vec3(pantalla3, 0.0f, 0.0f)); // Parte oculta -> 3.0 En X & 1.78 cuando se muestra
-		//pantallaSinCanal.Draw(Anim2);
-		//glBindVertexArray(0);
-
-
+		modelLoc = glGetUniformLocation(Anim2.Program, "model");
+		viewLoc = glGetUniformLocation(Anim2.Program, "view");
+		projLoc = glGetUniformLocation(Anim2.Program, "projection");
+		// Set matrices
+		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1f(glGetUniformLocation(Anim2.Program, "time"), tiempo);
+		model = glm::translate(model, glm::vec3(0.0, 0.0f * glfwGetTime(), 0.0f));
+		model = glm::translate(model, glm::vec3(0.0, 0.0f, 0.0f)); // Parte oculta -> 3.0 En X & 1.78 cuando se muestra
+		tunel.Draw(Anim2);
+		glBindVertexArray(0);
 
 
 
 
 
+
+		animateTo();
 
 		// Also draw the lamp object, again binding the appropriate shader
 		lampShader.Use();
@@ -1314,46 +1296,15 @@ void DoMovement()
 		static bool Paleta3abierta = false;
 
 		if (keys[GLFW_KEY_1]) {
-			
-			engine->play2D("Media/ping.mp3", false);
-
+			//engine->play2D("Media/bell.wav", false, false, true);
+			//Canica por Keyframes
+			SelAnimacion = true;
 		}
-		
-
-	//ANIMACION PUERTA
 		if (keys[GLFW_KEY_2])
 		{
-			if (!teclaPresionada2) {
-				teclaPresionada2 = true;  // Marcar la tecla como presionada
-
-				if (!puertaAbierta) {
-					// Estado: Ventana Cerrada
-					puertaAbierta = true;
-				}
-				else {
-					// Estado: Ventana Abierta
-					puertaAbierta = false;
-				}
-			}
-
+			//Canica por Transformaciones
+			SelAnimacion = false;
 		}
-		else {
-			teclaPresionada2 = false;  // Restablecer la tecla como no presionada
-		}
-		// Actualizar el estado de la ventana segun ventanaAbierta
-		if (puertaAbierta) {
-			if (rotPuerta > 0.3f) {
-				rotPuerta -= 0.05f;
-				movResorte -= 3.83;
-			}
-		}
-		else {
-			if (rotPuerta < 1.0f) {
-				rotPuerta += 0.4f;
-				movResorte += 30.64;
-			}
-		}
-
 	//ANIMACIÓN PANTALLAS
 	if (keys[GLFW_KEY_3])
 	{
@@ -1613,7 +1564,7 @@ void DoMovement()
 	{
 		if (modoCamara == 1)
 		{
-			camera.ProcessKeyboard(FORWARD, deltaTime);
+			camera.ProcessKeyboard(FORWARD, deltaTime*2);
 		}
 		else if (modoCamara == 2)
 		{
@@ -1656,7 +1607,7 @@ void DoMovement()
 	if (keys[GLFW_KEY_S] || keys[GLFW_KEY_DOWN])
 	{
 		if (modoCamara == 1)
-			camera.ProcessKeyboard(BACKWARD, deltaTime);
+			camera.ProcessKeyboard(BACKWARD, deltaTime * 2);
 		else if (modoCamara == 2)
 		{
 			movNemoY += -0.012081f;
@@ -1698,7 +1649,7 @@ void DoMovement()
 	if (keys[GLFW_KEY_A] || keys[GLFW_KEY_LEFT])
 	{
 		if (modoCamara == 1)
-			camera.ProcessKeyboard(LEFT, deltaTime);
+			camera.ProcessKeyboard(LEFT, deltaTime * 2);
 		else if (modoCamara == 2)
 		{
 			movNemoX -= 0.2f;
@@ -1737,7 +1688,7 @@ void DoMovement()
 	if (keys[GLFW_KEY_D] || keys[GLFW_KEY_RIGHT])
 	{
 		if (modoCamara == 1)
-			camera.ProcessKeyboard(RIGHT, deltaTime);
+			camera.ProcessKeyboard(RIGHT, deltaTime * 2);
 		else if (modoCamara == 2)
 		{
 			movNemoX += 0.2f;
@@ -1777,29 +1728,139 @@ void DoMovement()
 
 
 }
-void animacionCanica() {
-	animateTo(glm::vec3(26.800079f, 102.798996f, -27.800072f));
-	animateTo(glm::vec3(20.500055f, 102.798996f, -31.000084f));
-	animateTo(glm::vec3(8.100008f, 102.798996f, -14.800022f));
-	animateTo(glm::vec3(7.200008f, 102.798996f, -18.000034f));
-	animateTo(glm::vec3(1.300013f, 97.999069f, 62.399620f));
-	animateTo(glm::vec3(-6.299984f, 97.999069f, 68.699524f));
-	animateTo(glm::vec3(0.0f, 0.0f, 0.0f));
-}
-void animateTo(glm::vec3 target) {
-	const float step = 0.5f;
+void animateTo() {
+	if (stateCanica1 == true)
+	{
+		if (state1)
+		{
 
-	while (movCANICAX != target.x || movCANICAY != target.y || movCANICAZ != target.z) {
-		if (movCANICAX < target.x) movCANICAX += step;
-		else if (movCANICAX > target.x) movCANICAX -= step;
+			if (movCANICAY < 5.4f)
+				movCANICAY += 0.00529f;
+			else if (movCANICAY >= 5.4)
+				movCANICAY = 5.4f;
+			if (movCANICAZ > -101.8f)
+				movCANICAZ -= 0.1f;
+			else if (movCANICAY <= -101.8)
+				movCANICAZ = -101.8f;
 
-		if (movCANICAY < target.y) movCANICAY += step;
-		else if (movCANICAY > target.y) movCANICAY -= step;
+			if (movCANICAY >= 5.4f && movCANICAZ <= -101.8f)
+			{
+				printf("Termino state1");
+				printf("%f %f %f", movCANICAX, movCANICAY, movCANICAZ);
+				state1 = false;
+				state2 = true;
+			}
 
-		if (movCANICAZ < target.z) movCANICAZ += step;
-		else if (movCANICAZ > target.z) movCANICAZ -= step;
 
-		// Puedes imprimir las coordenadas si lo deseas
-		std::cout << "Coordinates: (" << movCANICAX << ", " << movCANICAY << ", " << movCANICAZ << ")\n";
+		}
+		if (state2)//21.900061 103.398987 -30.900082
+		{
+			//printf("Inicia state2");
+
+			if (movCANICAY <= 6.0)
+				movCANICAY += 0.0057f;
+			else if (movCANICAY >= 6.0)
+				movCANICAY = 6.0f;
+			if (movCANICAZ >= -104.7)
+				movCANICAZ -= 0.1f;
+			else if (movCANICAZ <= -104.7)
+				movCANICAZ = -104.7f;
+			if (movCANICAY >= 6.0 && movCANICAZ <= -104.7f)
+			{
+				printf("Termino state2");
+				printf("%f %f %f\n", movCANICAX, movCANICAY, movCANICAZ);
+				state2 = false;
+				state3 = true;
+			}
+
+		}
+		if (state3)//10.000015 102.898994 -25.700062
+		{
+
+			if (movCANICAX >= -16.2)
+				movCANICAX -= 0.1f;
+			else if (movCANICAX <= -16.2)
+				movCANICAX = -16.2f;
+			if (movCANICAY >= 5.5)
+				movCANICAY -= 0.1f;
+			else if (movCANICAY <= 5.5f)
+				movCANICAY = 5.5f;
+			if (movCANICAZ <= -99.5)
+				movCANICAZ += 0.1f;
+			else if (movCANICAZ >= -99.5f)
+				movCANICAZ = -99.5f;
+			movHomero += 0.1;
+			if (movCANICAX <= -16.2 && movCANICAY <= 5.5 && movCANICAZ >= -99.5)
+			{
+				printf("Termino state3");
+				printf("%f %f %f\n", movCANICAX, movCANICAY, movCANICAZ);
+				state3 = false;
+				state4 = true;
+			}
+
+		}
+		if (state4)//10.000015 102.898994 -25.700062
+		{
+			movHomero += 0.1;
+			if (movCANICAX <= -8.0)
+				movCANICAX += 0.1f;
+			if (movCANICAY >= 5.1)
+				movCANICAY -= 0.001f;
+			if (movCANICAZ <= -89.4)
+				movCANICAZ += 0.1f;
+			if (movCANICAX >= -8.0 && movCANICAY <= 5.1 && movCANICAZ >= -89.4)
+			{
+				printf("Termino state4");
+				printf("%f %f %f\n", movCANICAX, movCANICAY, movCANICAZ);
+				state4 = false;
+				state5 = true;
+			}
+
+		}
+		if (state5)//10.000015 102.898994 -25.700062
+		{
+			if (movCANICAX >= -41.5)
+				movCANICAX -= 0.1f;
+			if (movCANICAY >= 3.0)
+				movCANICAY -= 0.03f;
+			if (movCANICAZ <= -54.2)
+				movCANICAZ += 0.1f;
+			if (movCANICAX <= -41.5 && movCANICAY <= 3.0 && movCANICAZ >= -54.2)
+			{
+				printf("Termino state5");
+				printf("%f %f %f\n", movCANICAX, movCANICAY, movCANICAZ);
+				state5 = false;
+				state6 = true;
+			}
+		}
+		if (state6)//10.000015 102.898994 -25.700062
+		{
+			movHomero -= 0.08;
+			if (movCANICAX <= -30.0)
+				movCANICAX += 0.1f;
+			if (movCANICAY >= -0.6)
+				movCANICAY -= 0.005f;
+			if (movCANICAZ <= -2.3)
+				movCANICAZ += 0.1f;
+
+			if (movCANICAX >= -30.0 && movCANICAY <= -0.6 && movCANICAZ >= -2.3)
+			{
+				printf("Termino state6");
+				state6 = false;
+				//state7 = true;
+				engine->play2D("Media/ping.mp3", false);
+			}
+
+
+		}
+		if (state7)//10.000015 102.898994 -25.700062
+		{
+			movCANICAX = 0.0f;
+			movCANICAY = 0.0f;
+			movCANICAZ = 0.0f;
+			state1 = false;
+			state7 = false;
+			stateCanica1 = false;
+		}
 	}
 }
